@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Monedero Virtual</title>
-    <link rel="stylesheet" href="stile.css">
+    <link rel="stylesheet" th:href="@{/css/stile.css}">
 </head>
 <body>
 <div class="formulario">
     <h1>Monedero Virtual</h1>
-    <form method="post">
+    <form th:action="@{/log}" method="post" >
         <div class="username">
-            <input type="text" name="usuario" required id="usuario">
+            <input type="text"  name="usuario" required id="usuario">
             <label for="usuario">Nombre de usuario</label>
             <span></span>
         </div>
         <div class="username">
-            <input type="password" name="password" required id="password">
+            <input type="password" name="password"  required id="password" >
             <label for="password">Contraseña</label>
 
             <span></span>
