@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Redimir Puntos - Monedero Virtual</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background: #003399; /* Azul rey */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+        }
+        .redeem-card {
+          background: #ffffff;
+          padding: 30px;
+          border-radius: 15px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          width: 380px;
+          color: #000000;
+        }
+        .redeem-card h2 {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+        .points-info {
+          font-size: 18px;
+          margin-bottom: 15px;
+          text-align: center;
+        }
+        .form-group {
+          margin-bottom: 15px;
+        }
+        .form-group label {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+        .form-group input {
+          width: 100%;
+          padding: 10px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+          background-color: #f8f8f8;
+          color: #000000;
+        }
+        .conversion-result {
+          text-align: center;
+          font-weight: bold;
+          margin: 10px 0;
+        }
+        button {
+          width: 100%;
+          padding: 12px;
+          background-color: #000000;
+          border: none;
+          color: white;
+          font-size: 16px;
+          border-radius: 10px;
+          cursor: pointer;
+          margin-top: 10px;
+        }
+        button:hover {
+          background-color: #333333;
+        }
+        .status-message {
+          text-align: center;
+          margin-top: 15px;
+          font-weight: bold;
+        }
+        .back-button {
+          margin-top: 20px;
+          background-color: transparent;
+          color: #003399;
+          border: none;
+          text-decoration: underline;
+          font-weight: bold;
+          cursor: pointer;
+        }
+        .back-button:hover {
+          color: #000000;
+        }
+    </style>
+</head>
+<body>
+<div class="redeem-card">
+    <h2>Redimir Puntos</h2>
+    <div class="points-info">Tienes <strong id="puntosTotales">1250</strong> puntos disponibles</div>
+
+    <div class="form-group">
+        <label for="puntosRedimir">Puntos a redimir</label>
+        <input type="number" id="puntosRedimir" placeholder="Ej: 1000" oninput="calcularValor()">
+    </div>
+    <div class="conversion-result" id="valorObtenido">$0 COP</div>
+
+    <button onclick="redimir()">Canjear</button>
+    <div class="status-message" id="estado"></div>
+
+    <button class="back-button" onclick="volverInicio()">← Volver al inicio</button>
+</div>
+
+<script>
+    const valorPorPunto = 10; // 1 punto = 10 pesos
+    let puntosDisponibles = 1250;
+
+    function calcularValor() {
+      const puntos = parseInt(document.getElementById("puntosRedimir").value) || 0;
+      const valor = puntos * valorPorPunto;
+      document.getElementById("valorObtenido").textContent = `Recibirás: $${valor.toLocaleString('es-CO')} COP`;
+    }
+
+    function redimir() {
+      const puntosInput = parseInt(document.getElementById("puntosRedimir").value);
+      const estado = document.getElementById("estado");
+
+      if (!puntosInput || puntosInput <= 0) {
+        estado.style.color = "red";
+        estado.textContent = "Por favor, ingresa una cantidad válida de puntos.";
+        return;
+      }
+
+      if (puntosInput > puntosDisponibles) {
+        estado.style.color = "red";
+        estado.textContent = "No tienes suficientes puntos.";
+        return;
+      }
+
+      const monto = puntosInput * valorPorPunto;
+      puntosDisponibles -= puntosInput;
+
+      document.getElementById("puntosTotales").textContent = puntosDisponibles;
+      document.getElementById("puntosRedimir").value = "";
+      document.getElementById("valorObtenido").textContent = "$0 COP";
+
+      estado.style.color = "green";
+      estado.textContent = `¡Has recibido $${monto.toLocaleString('es-CO')} COP! Tus puntos han sido actualizados.`;
+    }
+
+    function volverInicio() {
+      // Cambia 'inicio.html' por la ruta real de tu página principal
+      window.location.href = 'inicio.html';
+    }
+</script>
+</body>
+</html>
