@@ -1,47 +1,44 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuenta</title>
-    <link rel="stylesheet" th:href="@{/css/swiper-bundle.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
-
-    <link th:href="@{/ImagenesWeb}" rel="shortcut icon" type="image/x-icon"/>
+    <link rel="stylesheet"  href="/static/css/swiper-bundle.min.css" th:href="@{/css/swiper-bundle.min.css}" />
+    <link rel="stylesheet"  href="/static/css/style.css" th:href="@{/css/style.css}" />
+    <link th:href="@{/ImagenesWeb/usuario.png}"  rel="shortcut icon" type="image/x-icon" />
     <title> Cuenta </title>
 </head>
 
 <body>
+
 <header class="header" id="header">
     <nav class="nav container">
-        <a href="" class="navl">
-            <img src="/static/ImagenesWeb/usuario.png" th:src="@{/ImagenesWeb/usuario.png}" alt="favicon" class="navl-img">
-            usuario
+        <a href="" class="navL">
+            <img src="/static/ImagenesWeb/usuario.png" th:src="@{/ImagenesWeb/usuario.png}" alt="favicon" class="navL-img">
+            <h1 th:text="${title}" ></h1>
         </a>
         <div class="navM" id="nav-menu">
             <ul class="navList">
-                <li class="naviItem">
-                    <a href="#home" class="naviLink active-link">
-                        Inicio
-                    </a>
+                <li class="navItem">
+                    <a href="#home" class="navLink active-link"> Inicio </a>
                 </li>
-                <li class="naviItem">
+                <li class="navItem">
                     <a href="#about" class="navLink">
                         Nosotros
                     </a>
                 </li>
                 <li class="navItem">
-                    <a href="#recursos" class="navLink">
-                        recursos
-                    </a>
+                    <a href="#product" class="navLink">
+                        recursos </a>
                 </li>
             </ul>
             <div class="navClose" id="nav-close">
                 <i class="bx bx-x"></i>
             </div>
         </div>
-        <div class="navTogle" id="nav-toggle">
+        <div class="navToggle" id="nav-toggle">
             <i class="bx bx-grid-alt"></i>
         </div>
     </nav>
@@ -60,8 +57,8 @@
                                 iusto quasi ad, voluptates modi labore voluptas quas!
                             </p>
                             <div class="homebut">
-                                <a href="#" class="button">servicios</a>
-                                <a href="#" class="button ">productos</a>
+                                <a href="#" class="button">Ver Historial</a>
+                                <a href="#" class="button ">Historial Transacciones</a>
                             </div>
                         </div>
                         <div class="homegroup">
@@ -74,38 +71,43 @@
     </section>
     <!--Categoria-->
     <section class="section category">
-        <h2>Tipo tranferencia <br> Categorias</h2>
+        <h2 class="sectiontitle"> Tipo tranferencia <br> Categorias</h2>
         <div class="categorycontainer container grid">
             <div class="categorydata">
-                <img src="/static/ImagenesWeb/ahorro.jpg" th:src="@{ImagenesWeb/ahorro.jpg}" alt="facto">
+                <img class="categoryimg" src="/static/ImagenesWeb/ahorro.jpg" th:src="@{ImagenesWeb/ahorro.jpg}" alt="facto">
                 <h3 class="categorytitle">Lorem</h3>
                 <p class="categorydescriptiom">Lorem</p>
+                <button class="button ahorro">Ver ahorros</button>
             </div>
             <div class="categorydata">
-                <img src="/static/ImagenesWeb/historial.jpg" th:src="@{ImagenesWeb/historial.jpg}" alt="facto">
+                <img class="categoryimg"     src="/static/ImagenesWeb/historial.jpg" th:src="@{ImagenesWeb/historial.jpg}" alt="facto">
                 <h3 class="categorytitle">Lorem</h3>
                 <p class="categorydescriptiom">Lorem</p>
+                <button class="button historial">Ver historial</button>
             </div>
             <div class="categorydata">
-                <img src="/static/ImagenesWeb/total.jpg" th:src="@{ImagenesWeb/total.jpg}" alt="facto">
+                <img class="categoryimg" src="/static/ImagenesWeb/total.jpg" th:src="@{ImagenesWeb/total.jpg}" alt="facto">
                 <h3 class="categorytitle">Lorem</h3>
                 <p class="categorydescriptiom">Lorem</p>
+                <button class="button total">Consultar total</button>
             </div>
             <div class="categorydata">
-                <img src="/static/ImagenesWeb/saldo.jpg"  th:src="@{ImagenesWeb/saldo.jpg}" alt="facto">
+                <img class="categoryimg" src="/static/ImagenesWeb/saldo.jpg" th:src="@{ImagenesWeb/saldo.jpg}" alt="facto">
                 <h3 class="categorytitle">Lorem</h3>
                 <p class="categorydescriptiom">Lorem</p>
+                <button class="button saldo"> Consultar Saldo</button>
+
             </div>
         </div>
     </section>
     <!--ABOUT-->
     <section class="section about" id="about">
         <div class="aboutcontainer container grid">
-            <img src="/static/ImagenesWeb/saldo.jpg"  th:src="@{ImagenesWeb/saldo.jpg}" alt="fac" class="abouting" >
+            <img src="/static/ImagenesWeb/saldo.jpg" th:src="@{ImagenesWeb/saldo.jpg}" alt="fac" class="abouting">
             <div class="aboutdata">
                 <h2 class="sectiontitle abouttitle">Nosotros <br>Somos</h2>
                 <p class="aboutdescription">Lorem</p>
-                <a href="#" class="button">adipsicing</a>
+                <a href="#" class="button">ver puntos</a>
             </div>
         </div>
 
@@ -113,22 +115,26 @@
 
 
     <!--Puntos-->
-    <section class="section product" id="points">
+    <section class="section product" id="product">
         <h2 class="sectiontitle">Puntos</h2>
-        <div class="puntos container grid">
-            <div class="pointscontainer">
-                <img src="/static/ImagenesWeb/puntos.png"  th:src="@{ImagenesWeb/puntos.png}" alt="" class="pointsimg">
-                <h3 class="pointstitle">Lorem</h3>
-                <span class="pointtitle">Lorem</span>
-                <span class="points">$</span>
-                <button class="button points">
-                    <i class="bx x-cart-alt points"> </i>
-                </button>
+        <div class="points container grid">
+            <div class="pointscontainer container grid">
+                <div class="pointscontent">
+                    <img src="/static/ImagenesWeb/puntos.png" th:src="@{ImagenesWeb/puntos.png}" alt=""
+                         class="pointsimg">
+                    <h3 class="pointstitle">Lorem</h3>
+                    <span class="pointtitle">Lorem</span>
+                    <span class="pointssubtitle">$</span>
+                    <button class="button points">
+                        <i class="bx x-cart-alt points"> </i>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
-
 </main>
+
+
 
 </body>
 

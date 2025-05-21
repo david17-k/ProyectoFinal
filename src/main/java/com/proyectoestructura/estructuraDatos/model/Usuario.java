@@ -1,28 +1,38 @@
 package com.proyectoestructura.estructuraDatos.model;
 
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
+import org.springframework.stereotype.Controller;
+
+
 
 public class Usuario {
     private String nombre;
     private String apellido;
     private String cedula;
+    private String idCuenta;
 
-    private Lista<Cuenta>cuentaUsuario=new Lista<>();
 
 
-    public Usuario(String apellido, String cedula, String nombre) {
+
+    public Usuario(String apellido, String cedula, String idCuenta, String nombre) {
         this.apellido = apellido;
         this.cedula = cedula;
+        this.idCuenta = idCuenta;
         this.nombre = nombre;
     }
 
-    public Lista<Cuenta> getCuentaUsuario() {
-        return cuentaUsuario;
+    public Usuario(){
+
     }
 
-    public void setCuentaUsuario(Lista<Cuenta> cuentaUsuario) {
-        this.cuentaUsuario = cuentaUsuario;
+    public String getIdCuenta() {
+        return idCuenta;
     }
+
+    public void setIdCuenta(String idCuenta) {
+        this.idCuenta = idCuenta;
+    }
+
 
     public String getApellido() {
         return apellido;
@@ -48,4 +58,14 @@ public class Usuario {
         this.nombre = nombre;
     }
 
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "apellido='" + apellido + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", cedula='" + cedula + '\'' +
+                ", idCuenta='" + idCuenta + '\'' +
+                '}';
+    }
 }
