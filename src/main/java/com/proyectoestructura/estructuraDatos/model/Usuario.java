@@ -1,11 +1,21 @@
 package com.proyectoestructura.estructuraDatos.model;
 
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import org.springframework.stereotype.Controller;
 
 
-
+@Entity
 public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private long id;
+
+
     private String nombre;
     private String apellido;
     private String cedula;
@@ -23,6 +33,14 @@ public class Usuario {
 
     public Usuario(){
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getIdCuenta() {

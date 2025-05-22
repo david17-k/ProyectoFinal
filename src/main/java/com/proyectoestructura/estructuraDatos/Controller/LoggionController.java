@@ -25,6 +25,7 @@ public class LoggionController {
             @RequestParam("password") String contrasena) {
 
         if (modelController.verificarInicio(usuario,contrasena)) {
+            modelController.guardarLog(usuario);
             return "redirect:/cuenta";
         }
         return "home/login";

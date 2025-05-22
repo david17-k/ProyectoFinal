@@ -5,6 +5,9 @@ import com.proyectoestructura.estructuraDatos.model.Cuenta;
 import com.proyectoestructura.estructuraDatos.model.Deposito;
 import com.proyectoestructura.estructuraDatos.model.Monedero;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
+import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,6 +15,10 @@ public class ModelController {
 
     private static ModelController getInstance;
     Monedero monedero=new Monedero();
+
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     Cuenta cuenta=new Cuenta();
 
@@ -35,6 +42,7 @@ public class ModelController {
     public void crearCuenta(Usuario usuario){
         monedero.getUsuarioLista().agregarPrimera(usuario);
         monedero.getUsuarioLista().mostrarContenido();
+        usuarioRepositorio.save(usuario);
         System.out.println("Usuario"+ usuario.getNombre()+ "Guaradado");
     }
 
@@ -48,6 +56,19 @@ public class ModelController {
             }
         }
         return encontrado;
+    }
+
+    public void registarTransaccion(){
+
+    }
+
+    public void guardarLog(String usuario){
+        monedero.getInicioSeccion().push(usuario);
+        monedero.getInicioSeccion().ver();
+    }
+
+    public String cuentaUsuario(){
+       return monedero.getInicioSeccion().poll();
     }
 
 

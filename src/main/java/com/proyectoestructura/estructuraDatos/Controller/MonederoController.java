@@ -1,6 +1,8 @@
 package com.proyectoestructura.estructuraDatos.Controller;
 
 
+import com.proyectoestructura.estructuraDatos.model.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MonederoController {
 
-    @GetMapping("/cuentas")
+    @Autowired
+    ModelController modelController;
+
+    @GetMapping("/cuenta")
     public String bienvenida(Model model){
-        model.addAttribute("title","perra");
+        String usuario=modelController.cuentaUsuario();
+        model.addAttribute("title",usuario);
         return "home/cuenta";
     }
 

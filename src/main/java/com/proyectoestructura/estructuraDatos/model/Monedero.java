@@ -9,6 +9,15 @@ public class Monedero {
 
     private Lista<Usuario>usuarioLista=new Lista<>();
     private Cola<Transferencia>transferenciaCola=new Cola<>();
+    private Cola<String>inicioSeccion=new Cola<>();
+
+    public Cola<String> getInicioSeccion() {
+        return inicioSeccion;
+    }
+
+    public void setInicioSeccion(Cola<String> inicioSeccion) {
+        this.inicioSeccion = inicioSeccion;
+    }
 
     public Cola<Transferencia> getTransferenciaCola() {
         return transferenciaCola;
