@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -54,6 +53,7 @@
       border-radius: 10px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      margin-top: 10px;
     }
     button:hover {
       background-color: #333333;
@@ -66,41 +66,41 @@
   </style>
 </head>
 <body>
-  <div class="deposit-card">
-    <h2>Realizar Depósito</h2>
-    <div class="form-group">
-      <label for="monto">Monto a Depositar</label>
-      <input type="number" id="monto" placeholder="0.00">
-    </div>
-    <div class="form-group">
-      <label for="referencia">Número de Cuenta</label>
-      <input type="text" id="referencia" placeholder="123987456">
-    </div>
-    <div class="form-group">
-      <label for="descripcion">Descripción (opcional)</label>
-      <textarea id="descripcion" rows="2" placeholder="Depósito desde banco..."></textarea>
-    </div>
-    <button onclick="realizarDeposito()">Depositar</button>
-    <div class="status-message" id="estado"></div>
+<div class="deposit-card">
+  <h2>Realizar Depósito</h2>
+  <div class="form-group">
+    <label for="monto">Monto a Depositar</label>
+    <input type="number" id="monto" placeholder="0.00">
   </div>
+  <div class="form-group">
+    <label for="referencia">Número de Cuenta</label>
+    <input type="text" id="referencia" placeholder="123987456">
+  </div>
+  <div class="form-group">
+    <label for="descripcion">Descripción (opcional)</label>
+    <textarea id="descripcion" rows="2" placeholder="Depósito desde banco..."></textarea>
+  </div>
+  <button onclick="realizarDeposito()">Depositar</button>
+  <button onclick="window.history.back()">Volver al inicio</button>
+  <div class="status-message" id="estado"></div>
+</div>
 
-  <script>
-    function realizarDeposito() {
-      const monto = document.getElementById('monto').value;
-      const referencia = document.getElementById('referencia').value;
-      const descripcion = document.getElementById('descripcion').value;
-      const estado = document.getElementById('estado');
+<script>
+  function realizarDeposito() {
+    const monto = document.getElementById('monto').value;
+    const referencia = document.getElementById('referencia').value;
+    const descripcion = document.getElementById('descripcion').value;
+    const estado = document.getElementById('estado');
 
-      if (!monto || monto <= 0 || !referencia) {
-        estado.style.color = 'red';
-        estado.textContent = "Por favor, completa los campos obligatorios.";
-        return;
-      }
-
-      // Simulación de éxito
-      estado.style.color = 'green';
-      estado.textContent = "Depósito registrado con éxito.";
+    if (!monto || monto <= 0 || !referencia) {
+      estado.style.color = 'red';
+      estado.textContent = "Por favor, completa los campos obligatorios.";
+      return;
     }
-  </script>
+
+    estado.style.color = 'green';
+    estado.textContent = "Depósito registrado con éxito.";
+  }
+</script>
 </body>
 </html>
