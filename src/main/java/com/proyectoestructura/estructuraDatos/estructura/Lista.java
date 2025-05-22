@@ -1,6 +1,8 @@
 package com.proyectoestructura.estructuraDatos.estructura;
 
-public class Lista <T>{
+import java.util.Iterator;
+
+public class Lista <T> implements Iterable<T> {
 
     private Nodo<T>primerNodo;
     private Nodo<T>ultimoNodo;
@@ -111,6 +113,40 @@ public class Lista <T>{
         }
     }
 
+    public void mostrarContenido(){
+        Nodo<T>aux=primerNodo;
+        while (aux!=null){
+            System.out.println(aux.getDato());
+            aux=aux.getSiguienteNodo();
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new iterador(primerNodo);
+    }
+
+    public class iterador implements Iterator<T>{
+
+        Nodo<T>nodo;
+
+        public iterador(Nodo<T> nodo) {
+            this.nodo = nodo;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nodo!=null;
+        }
+
+        @Override
+        public T next() {
+            T dato=nodo.getDato();
+            nodo=nodo.getSiguienteNodo();
+            return dato;
+        }
+
+    }
 
 
 }

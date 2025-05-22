@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear Cuenta</title>
+    <link th:href="@{/ImagenesWeb}" href="/static/ImagenesWeb/usuario.png" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/css/crear.css" th:href="@{/css/crear.css}" />
+
+</head>
+<body>
+<div class="crearcuenta">
+    <h1>Crear Cuenta</h1>
+    <form th:action="@{crearcuenta}" method="post">
+        <div class="nombre">
+            <input type="text" name="nombre" required id="nombre">
+            <label for="nombre">Nombre</label>
+            <span></span>
+        </div>
+        <div class="nombre">
+            <input type="text" name="apellido" required id="apellido">
+            <label for="apellido">apellido</label>
+            <span></span>
+        </div>
+        <div class="nombre">
+            <input type="text" name="cedula" required id="cedula">
+            <label for="cedula">cedula</label>
+            <span></span>
+        </div>
+        <div class="nombre">
+            <input type="text" name="idCuenta" required id="idCuenta">
+            <label for="idCuenta">Idcuenta</label>
+            <span></span>
+        </div>
+        <div class="registrarse">
+            <input type="submit" th:action="@{crearcuenta}" value="Crear cuenta">
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>
