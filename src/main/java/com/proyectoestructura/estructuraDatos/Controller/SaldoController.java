@@ -6,9 +6,7 @@ public class SaldoController implements SaldoControllerServicie {
 
     ModelController modelController;
 
-    public SaldoController(){
-        modelController=ModelController.singleton();
-    }
+
 
     @Override
     public boolean actualizarSaldo(int saldo) {

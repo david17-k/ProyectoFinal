@@ -1,11 +1,10 @@
 package com.proyectoestructura.estructuraDatos.Controller;
 
 
-import com.proyectoestructura.estructuraDatos.model.Cuenta;
+import com.proyectoestructura.estructuraDatos.estructura.Lista;
 import com.proyectoestructura.estructuraDatos.model.Deposito;
 import com.proyectoestructura.estructuraDatos.model.Monedero;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
-import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,63 +12,90 @@ import org.springframework.stereotype.Service;
 @Service
 public class ModelController {
 
-    private static ModelController getInstance;
-    Monedero monedero=new Monedero();
+
+    private final Monedero monedero = new Monedero();
+
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private ApiController apiController;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    Cuenta cuenta=new Cuenta();
 
-    public   synchronized  static ModelController singleton(){
-        if(getInstance==null){
-            getInstance=new ModelController();
-        }
-        return getInstance;
-    }
-
-    public boolean depositar(int deposito){
-        if(deposito>0){
-            Deposito deposito1=new Deposito(deposito);
+    public boolean depositar(int deposito) {
+        if (deposito > 0) {
+            Deposito deposito1 = new Deposito(deposito);
 
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public void crearCuenta(Usuario usuario){
+    public void crearCuenta(Usuario usuario) {
         monedero.getUsuarioLista().agregarPrimera(usuario);
         monedero.getUsuarioLista().mostrarContenido();
-        usuarioRepositorio.save(usuario);
-        System.out.println("Usuario"+ usuario.getNombre()+ "Guaradado");
+        apiController.guardarUsuario(usuario);
+        System.out.println("Usuario " + usuario.getNombre() + "Guaradado");
     }
 
 
-    public boolean verificarInicio(String nombre,String id){
-        boolean encontrado=false;
-        for(Usuario u: monedero.getUsuarioLista()){
-            if(nombre.equals(u.getNombre()) && id.equals(u.getIdCuenta())){
+    public boolean verificarInicio(String nombre, String id) {
+        boolean encontrado = false;
+        for (Usuario u : monedero.getUsuarioLista()) {
+            if (nombre.equals(u.getNombre()) && id.equals(u.getIdCuenta())) {
                 System.out.println("Registrado");
-                encontrado=true;
+                encontrado = true;
             }
         }
         return encontrado;
     }
 
-    public void registarTransaccion(){
+    public void registarTransaccion() {
 
     }
 
-    public void guardarLog(String usuario){
+    public Usuario guardarLog(String usuario) {
+        for (Usuario usuario1 : monedero.getUsuarioLista()) {
+            if (usuario1.getNombre().equals(usuario)) {
+                return usuario1;
+            }
+        }
+        return null;
+    }
+
+    public void obtenerUsuario(Usuario usuario){
         monedero.getInicioSeccion().push(usuario);
-        monedero.getInicioSeccion().ver();
     }
 
-    public String cuentaUsuario(){
-       return monedero.getInicioSeccion().poll();
+    public void depositar(Deposito deposito){
+        if(monedero.getDeposito().isEmpti()) {
+            monedero.getDeposito().agregarPrimera(deposito);
+            apiController.guardarDeposito(deposito);
+        }else{
+            actuliarSaldo(monedero.getDeposito());
+        }
+        monedero.getDeposito().mostrarContenido();
     }
+
+    public double actulizar(){
+        return actuliarSaldo(monedero.getDeposito());
+    }
+
+    public double actuliarSaldo(Lista<Deposito>actulizar){
+        double total=0;
+      if(!actulizar.isEmpti()){
+          Deposito deposito=actulizar.vaciarLista();
+          total+=deposito.getDeposito();
+        }
+        return total;
+
+    }
+
+
+
+
+
+
 
 
 

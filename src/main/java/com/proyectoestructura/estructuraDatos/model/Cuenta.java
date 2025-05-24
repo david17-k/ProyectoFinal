@@ -17,6 +17,7 @@ public class Cuenta {
 
     }
 
+
     public Cuenta(String contraseña, String idUsuario) {
         this.contraseña = contraseña;
         this.idUsuario = idUsuario;

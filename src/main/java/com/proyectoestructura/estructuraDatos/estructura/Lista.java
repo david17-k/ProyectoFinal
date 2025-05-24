@@ -1,20 +1,26 @@
 package com.proyectoestructura.estructuraDatos.estructura;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Lista <T> implements Iterable<T> {
 
-    private Nodo<T>primerNodo;
-    private Nodo<T>ultimoNodo;
+    private Nodo<T> primerNodo;
+    private Nodo<T> ultimoNodo;
     private int tamaño;
 
-    public void agregarPrimera(T dato){
-        Nodo<T>nuevoNodo=new Nodo<>(dato);
-        if(vacio()){
-            primerNodo=nuevoNodo;
-        }else{
+    public Lista() {
+
+    }
+
+    public void agregarPrimera(T dato) {
+        Nodo<T> nuevoNodo = new Nodo<>(dato);
+        if (vacio()) {
+            primerNodo = nuevoNodo;
+        } else {
             nuevoNodo.setSiguienteNodo(primerNodo);
-            primerNodo=nuevoNodo;
+            primerNodo = nuevoNodo;
         }
         tamaño++;
     }
@@ -23,39 +29,39 @@ public class Lista <T> implements Iterable<T> {
         return primerNodo == null;
     }
 
-    public void recorrer(){
-        if(vacio()){
+    public void recorrer() {
+        if (vacio()) {
             System.out.println("No hay nada");
-        }else{
-            Nodo<T>aux=primerNodo;
-            while (aux!= null){
+        } else {
+            Nodo<T> aux = primerNodo;
+            while (aux != null) {
                 System.out.println(aux.getDato());
-                aux=aux.getSiguienteNodo();
+                aux = aux.getSiguienteNodo();
             }
         }
     }
 
-    public void agregarFinal(T dato){
-        Nodo<T>nodo=new Nodo<>(dato);
-        if(vacio()){
-            primerNodo=ultimoNodo=nodo;
-        }else {
+    public void agregarFinal(T dato) {
+        Nodo<T> nodo = new Nodo<>(dato);
+        if (vacio()) {
+            primerNodo = ultimoNodo = nodo;
+        } else {
             ultimoNodo.setSiguienteNodo(nodo);
-            ultimoNodo=nodo;
+            ultimoNodo = nodo;
         }
         tamaño++;
     }
 
-    public void obtenerPosicionImpar(){
-        if(vacio()){
+    public void obtenerPosicionImpar() {
+        if (vacio()) {
             System.out.println("No hay nada");
-        }else {
-            int indice=0;
-            Nodo<T>aux=primerNodo;
-            while (aux!=null){
+        } else {
+            int indice = 0;
+            Nodo<T> aux = primerNodo;
+            while (aux != null) {
                 indice++;
-                aux=aux.getSiguienteNodo();
-                if(indice%2!=0){
+                aux = aux.getSiguienteNodo();
+                if (indice % 2 != 0) {
                     System.out.println(aux.getDato());
                 }
             }
@@ -64,60 +70,60 @@ public class Lista <T> implements Iterable<T> {
         }
     }
 
-    public void eliminarUltimoNodo(){
-        Nodo<T>eliminar=primerNodo;
-        Nodo<T>previo=primerNodo.getSiguienteNodo();
+    public void eliminarUltimoNodo() {
+        Nodo<T> eliminar = primerNodo;
+        Nodo<T> previo = primerNodo.getSiguienteNodo();
 
-        while (previo.getSiguienteNodo()!=null){
-            previo=previo.getSiguienteNodo();
-            eliminar=eliminar.getSiguienteNodo();
+        while (previo.getSiguienteNodo() != null) {
+            previo = previo.getSiguienteNodo();
+            eliminar = eliminar.getSiguienteNodo();
         }
         eliminar.setSiguienteNodo(null);
         tamaño--;
     }
 
-    public Nodo<T> eliminarPar(){ // 8 1 4
-        Nodo<T>aux=primerNodo;
-        Nodo<T>anterior=null;
-        while (aux!=null){
-            if(verificar(aux.getDato())) {
-                if(anterior==null){
-                    primerNodo=aux.getSiguienteNodo();
-                }else {
+    public Nodo<T> eliminarPar() { // 8 1 4
+        Nodo<T> aux = primerNodo;
+        Nodo<T> anterior = null;
+        while (aux != null) {
+            if (verificar(aux.getDato())) {
+                if (anterior == null) {
+                    primerNodo = aux.getSiguienteNodo();
+                } else {
                     anterior.setSiguienteNodo(aux.getSiguienteNodo());
                 }
-            }else {
-                anterior=aux;
+            } else {
+                anterior = aux;
             }
-            aux=aux.getSiguienteNodo();
+            aux = aux.getSiguienteNodo();
 
         }
         return primerNodo;
 
     }
 
-    private boolean isEmpti(Nodo<T> aux) {
-        if(aux==null){
+    public boolean isEmpti() {
+        if (primerNodo == null) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
     private boolean verificar(T dato) {
-        int numero=(int)dato;
-        if(numero%2==0){
+        int numero = (int) dato;
+        if (numero % 2 == 0) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
-    public void mostrarContenido(){
-        Nodo<T>aux=primerNodo;
-        while (aux!=null){
+    public void mostrarContenido() {
+        Nodo<T> aux = primerNodo;
+        while (aux != null) {
             System.out.println(aux.getDato());
-            aux=aux.getSiguienteNodo();
+            aux = aux.getSiguienteNodo();
         }
     }
 
@@ -126,9 +132,9 @@ public class Lista <T> implements Iterable<T> {
         return new iterador(primerNodo);
     }
 
-    public class iterador implements Iterator<T>{
+    public class iterador implements Iterator<T> {
 
-        Nodo<T>nodo;
+        Nodo<T> nodo;
 
         public iterador(Nodo<T> nodo) {
             this.nodo = nodo;
@@ -136,17 +142,42 @@ public class Lista <T> implements Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            return nodo!=null;
+            return nodo != null;
         }
 
         @Override
         public T next() {
-            T dato=nodo.getDato();
-            nodo=nodo.getSiguienteNodo();
+            T dato = nodo.getDato();
+            nodo = nodo.getSiguienteNodo();
             return dato;
         }
 
     }
 
+    public List<T> toList() {
+        List<T> resultado = new ArrayList<>();
+        Nodo<T> actual = primerNodo;
+        while (actual != null) {
+            resultado.add(actual.getDato());
+            actual = actual.getSiguienteNodo();
+        }
+        return resultado;
+    }
 
+    public List<T> iteratorToList() {
+        List<T> list = new ArrayList<>();
+        for (T elemento : this) {
+            list.add(elemento);
+        }
+        return list;
+    }
+
+    public T vaciarLista() {
+            T dato = primerNodo.getDato();
+            primerNodo = primerNodo.getSiguienteNodo();
+            return dato;
+    }
 }
+
+
+

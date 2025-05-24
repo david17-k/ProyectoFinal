@@ -15,7 +15,7 @@
     <nav class="nav container">
         <a href="" class="navL">
             <img src="/static/ImagenesWeb/usuario.png" th:src="@{/ImagenesWeb/usuario.png}" alt="favicon" class="navL-img">
-            <h1 th:text="${title}" ></h1>
+            <span th:text="${nombre}">Nombre</span>
         </a>
         <div class="navM" id="nav-menu">
             <ul class="navList">
@@ -29,7 +29,7 @@
                 </li>
                 <li class="navItem">
                     <a href="#product" class="navLink">
-                        recursos </a>
+                        Servicios </a>
                 </li>
             </ul>
             <div class="navClose" id="nav-close">
@@ -56,10 +56,16 @@
                                 <a href="#" class="button">Ver Informacion</a>
                                 <a href="#" class="button ">Rango</a>
                             </div>
+                            <div class="saldodata">
+                                <h1 class="hometitle" >Saldo</h1>
+                                <h2 class="hometitle" th:text="${saldo}">$</h2>
+                            </div>
                         </div>
+
                         <div class="homegroup">
-                            <img src="/static/ImagenesWeb/pagos.jpg" th:src="@{/ImagenesWeb/pagos.jpg}" alt="" class="tranferencia">
+                            <img src="/static/ImagenesWeb/pagos.jpg" th:src="@{/ImagenesWeb/pagos.jpg}" alt="" class="homeimg">
                         </div>
+
                     </div>
                 </section>
             </div>
@@ -75,76 +81,75 @@
                 <button class="button ahorro">Ver ahorros</button>
             </div>
             <div class="categorydata">
-                <img class="categoryimg"    src="/static/ImagenesWeb/historial.jpg" th:src="@{ImagenesWeb/historial.jpg}" alt="facto">
+                <img class="categoryimg"  src="/static/ImagenesWeb/historial.jpg" th:src="@{ImagenesWeb/historial.jpg}" alt="facto">
                 <h3 class="categorytitle">Conoce tu historial</h3>
                 <button class="button historial">Ver historial</button>
             </div>
             <div class="categorydata">
                 <img class="categoryimg" src="/static/ImagenesWeb/total.jpg" th:src="@{ImagenesWeb/total.jpg}" alt="facto">
-                <p class="categorydescriptiom">Asegurate de tener saldo</p>
-                <button class="button saldo"> Consultar Saldo</button>
+                <h3 class="categorytitle">Cuenta de gastos</h3>
+                <button class="button saldo">Gastos</button>
             </div>
         </div>
     </section>
-    <!--ABOUT-->
-    <section class="section about">
-        <div class="aboutcontainer container grid">
-            <img src="/static/ImagenesWeb/saldo.jpg" th:href="@{ImagenesWeb/saldo.jpg}" alt="fac" class="abouting">
-            <div class="aboutdata">
-            </div>
-        </div>
-
-    </section>
-
 
     <!--Puntos-->
     <section class="section product" id="product">
-        <h2 class="sectiontitle">Tipos de transacciones</h2>
-        <div class="points container grid">
-            <div class="pointscontainer container grid">
-                <div class="pointscontent">
-                    <img src="/static/ImagenesWeb/puntos.png" th:src="@{ImagenesWeb/puntos.png}" alt=""
-                         class="pointsimg">
-                    <h3 class="pointstitle">Conoce tus puntos</h3>
-                    <span class="pointssubtitle"></span>
-                    <button class="button points">
-                        <i class="bx x-cart-alt points">Puntos </i>
-                    </button>
-                </div>
-                <div class="pointscontent">
-                    <img src="/static/ImagenesWeb/puntos.png" th:src="@{ImagenesWeb/puntos.png}" alt=""
-                         class="pointsimg">
-                    <h3 class="pointstitle">Conoce tus puntos</h3>
-                    <span class="pointssubtitle"></span>
-                    <button class="button points">
-                        <i class="bx x-cart-alt points">Puntos </i>
-                    </button>
-                </div>
-                <div class="pointscontent">
-                    <img src="/static/ImagenesWeb/puntos.png" th:src="@{ImagenesWeb/puntos.png}" alt=""
-                         class="pointsimg">
-                    <h3 class="pointstitle">Conoce tus puntos</h3>
-                    <span class="pointssubtitle"></span>
-                    <button class="button points">
-                        <i class="bx x-cart-alt points">Puntos </i>
-                    </button>
-                </div>
-                <div class="pointscontent">
-                    <img src="/static/ImagenesWeb/puntos.png" th:src="@{ImagenesWeb/puntos.png}" alt=""
-                         class="pointsimg">
-                    <h3 class="pointstitle">Conoce tus puntos</h3>
-                    <span class="pointssubtitle"></span>
-                    <button class="button points">
-                        <i class="bx x-cart-alt points">Puntos </i>
-                    </button>
-                </div>
+        <h2 class="sectiontitle">Servicios</h2>
+        <div class="productcontainer container grid">
+            <div class="productcontent">
+                <form th:action="@{depositar}" method="post">
+                <img src="/static/ImagenesWeb/depositar.jpg" th:src="@{ImagenesWeb/depositar.jpg}" alt="" class="productimg" />
+                <h3 class="producttitle">Depositar</h3>
+                <span class="productsubtitle"></span>
+                <button class="button productbutton" th:href="@{depositar}">Deposita
+                    <i class="bx bx-cart-alt buttonicon"></i>
+                </button>
+                </form>
+            </div>
+            <div class="productcontent">
+                <img src="/static/ImagenesWeb/retirar.jpg" th:src="@{ImagenesWeb/retirar.jpg}" alt="" class="productimg" />
+                <h3 class="producttitle">Retirar</h3>
+                <span class="productsubtitle"></span>
+                <button class="button productbutton">Retira
+                    <i class="bx bx-cart-alt buttonicon"></i>
+                </button>
+            </div>
+            <div class="productcontent">
+                <img src="/static/ImagenesWeb/transferir.png" th:src="@{ImagenesWeb/transferir.png}" alt="" class="productimg" />
+                <h3 class="producttitle">Transferir</h3>
+                <span class="productsubtitle"></span>
+                <button class="button productbutton">Transfiere
+                    <i class="bx bx-cart-alt buttonicon"></i>
+                </button>
+            </div>
+            <div class="productcontent">
+                <img src="/static/ImagenesWeb/puntos.png"  th:src="@{ImagenesWeb/puntos.png}" alt="" class="productimg" />
+                <h3 class="producttitle">Consultar puntos</h3>
+                <span class="productsubtitle"></span>
+                <button class="button productbutton">VER
+                    <i class="bx bx-cart-alt buttonicon"></i>
+                </button>
+            </div>
+            <div class="productcontent">
+                <img src="/static/ImagenesWeb/redimir.jpg" th:src="@{ImagenesWeb/redimir.jpg}" alt="" class="productimg" />
+                <h3 class="producttitle">Redime tus puntos</h3>
+                <span class="productsubtitle"></span>
+                <button class="button productbutton">Redimir
+                    <i class="bx bx-cart-alt buttonicon"></i>
+                </button>
+            </div>
+            <div class="productcontent">
+                <img src="/static/ImagenesWeb/reloj.png" th:src="@{ImagenesWeb/reloj.png}" alt="" class="productimg" />
+                <h3 class="producttitle">Progrmar transaccion</h3>
+                <span class="productsubtitle"></span>
+                <button class="button productbutton">Programar
+                    <i class="bx bx-cart-alt buttonicon"></i>
+                </button>
             </div>
         </div>
+
     </section>
 </main>
-
-
-
 </body>
-
 </html>
