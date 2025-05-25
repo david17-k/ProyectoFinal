@@ -3,6 +3,7 @@ package com.proyectoestructura.estructuraDatos.Controller;
 
 import com.proyectoestructura.estructuraDatos.model.Deposito;
 import com.proyectoestructura.estructuraDatos.model.Monedero;
+import com.proyectoestructura.estructuraDatos.model.Transaccion;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
 import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import jakarta.servlet.http.HttpSession;
@@ -13,11 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class MonederoController {
 
     @Autowired
     ModelController modelController;
+    @Autowired
     ApiController apiController;
 
     @GetMapping("/cuenta")
@@ -47,11 +51,13 @@ public class MonederoController {
         return "home/Deposito";
     }
 
-    @PostMapping("/historial")
-    public void obtenerHistorial(){
-        apiController.obtenerHistorial();
+
+    @GetMapping("/historial")
+    public String verHistorial(HttpSession httpSession,Model model){
+        System.out.println("Historial");
+        List<Transaccion> historial=apiController.obtenerHistorial();
+        model.addAttribute("historial",historial);
+        return "home/prueba";
     }
-
-
 
 }

@@ -33,8 +33,7 @@ public class Monedero {
     @Transient
     private Lista<Usuario> usuarioLista = new Lista<>();
 
-    @Transient
-    private Cola<Transferencia> transferenciaCola = new Cola<>();
+
 
     @Transient
     private Cola<Usuario> inicioSeccion = new Cola<>();
@@ -46,14 +45,13 @@ public class Monedero {
 
     public void serializarTodo() throws Exception {
         this.usuarioListaJson = Serializador.serializar(usuarioLista);
-        this.transferenciaColaJson = Serializador.serializar(transferenciaCola);
         this.inicioSeccionJson = Serializador.serializar(inicioSeccion);
         this.depositoJson = Serializador.serializar(deposito);
+
     }
 
     public void deserializarTodo() throws Exception {
         if (usuarioListaJson != null) this.usuarioLista = Serializador.deserializarListaUsuario(usuarioListaJson);
-        if (transferenciaColaJson != null) this.transferenciaCola = Serializador.deserializarColaTransferencia(transferenciaColaJson);
         if (inicioSeccionJson != null) this.inicioSeccion = Serializador.deserializarColaUsuario(inicioSeccionJson);
         if (depositoJson != null) this.deposito = Serializador.deserializarListaDeposito(depositoJson);
     }

@@ -71,11 +71,11 @@
     <form th:action="@{deposito}" method="post">
     <div class="form-group">
       <label for="deposito">Monto a Depositar</label>
-      <input type="number"  placeholder="0.00" required id="deposito">
+      <input type="number" name="deposito"  placeholder="0.00" required id="deposito">
     </div>
     <div class="form-group">
-      <label for="referencia">Número de Cuenta</label>
-      <input type="text" id="referencia" placeholder="123987456">
+      <label for="idCuenta">Número de Cuenta</label>
+      <input type="text" id="idCuenta" name="idCuenta" placeholder="123987456">
     </div>
     <div class="form-group">
       <label for="descripcion">Descripción (opcional)</label>

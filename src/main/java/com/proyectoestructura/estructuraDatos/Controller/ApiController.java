@@ -4,6 +4,7 @@ package com.proyectoestructura.estructuraDatos.Controller;
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
 import com.proyectoestructura.estructuraDatos.model.Deposito;
 import com.proyectoestructura.estructuraDatos.model.Monedero;
+import com.proyectoestructura.estructuraDatos.model.Transaccion;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
 import com.proyectoestructura.estructuraDatos.repositorio.CuentaRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.HistorialRepositorio;
@@ -62,15 +63,17 @@ public class ApiController {
     }
 
     @PostMapping("/guardarHistorial")
-    public Monedero guardarHistorial(@RequestBody Monedero monedero){
-        return historialRepositorio.save(monedero);
+    public Transaccion guardarHistorial(@RequestBody Transaccion transaccion){
+        return historialRepositorio.save(transaccion);
     }
 
-    @PostMapping("/historial")
-    public List<Monedero>obtenerHistorial(){
-        Lista<Monedero>historial=new Lista<>();
-        for(Monedero h:cuentaRepositorio.findAll()){
-            System.out.println("Transaccion"+ h);
+@GetMapping("/historial")
+    public List<Transaccion>obtenerHistorial(){
+        System.out.println("Historial");
+        Lista<Transaccion>historial=new Lista<>();
+        for(Transaccion h:historialRepositorio.findAll()){
+            System.out.println("Transaccion"+ h.toString());
+            historial.agregarPrimera(h);
         }
         return historial.toList();
     }

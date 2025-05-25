@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.proyectoestructura.estructuraDatos.estructura.Cola;
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
 import com.proyectoestructura.estructuraDatos.model.Deposito;
-import com.proyectoestructura.estructuraDatos.model.Transferencia;
+
 import com.proyectoestructura.estructuraDatos.model.Usuario;
 
 import java.util.List;
@@ -55,11 +55,5 @@ public class Serializador {
         return cola;
     }
 
-    public static Cola<Transferencia> deserializarColaTransferencia(String json) throws Exception {
-        List<Transferencia> data = mapper.readValue(json, new TypeReference<>() {});
-        Cola<Transferencia> cola = new Cola<>();
-        data.forEach(cola::push);
-        return cola;
-    }
     
 }
