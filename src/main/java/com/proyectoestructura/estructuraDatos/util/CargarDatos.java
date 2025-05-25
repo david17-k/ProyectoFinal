@@ -20,7 +20,7 @@ public class CargarDatos implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (usuarioRepositorio.findAll().isEmpty()) {
-            usuarioRepositorio.save(new Usuario("Castillo", "100067", "123", "David"));
+            usuarioRepositorio.save(new Usuario("Castillo", "100067", 1, "123","David"));
         }
     }
 

@@ -23,10 +23,10 @@ public class Usuario {
 
 
 
-
-    public Usuario(String apellido, String cedula, String idCuenta, String nombre) {
+    public Usuario(String apellido, String cedula, long id, String idCuenta, String nombre) {
         this.apellido = apellido;
         this.cedula = cedula;
+        this.id = id;
         this.idCuenta = idCuenta;
         this.nombre = nombre;
     }

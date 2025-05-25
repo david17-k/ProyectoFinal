@@ -23,7 +23,7 @@ public class Transaccion {
 
     private String tipo;
     private LocalDate localDate;
-    private String nombre;
+    private double monto;
 
     @ManyToOne
     private Usuario usuario;
@@ -45,12 +45,12 @@ public class Transaccion {
         this.localDate = localDate;
     }
 
-    public String getNombre() {
-        return nombre;
+    public double getMonto() {
+        return monto;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setMonto(double monto) {
+        this.monto = monto;
     }
 
     public String getTipo() {
@@ -75,7 +75,7 @@ public class Transaccion {
                 "id=" + id+
                 ", tipo='" + tipo + '\'' +
                 ", localDate=" + localDate +
-                ", nombre='" + nombre + '\'' +
+                ", nombre='" + monto + '\'' +
                 '}';
     }
 }

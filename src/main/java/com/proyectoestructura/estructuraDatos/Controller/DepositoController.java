@@ -40,6 +40,7 @@ public class DepositoController {
            httpSession.setAttribute("monedero",monedero);
            Transaccion transaccion=new Transaccion();
            transaccion.setTipo("Deposito");
+           transaccion.setMonto(deposito.getDeposito());
            transaccion.setLocalDate(LocalDate.now());
            transaccion.setUsuario(usuario);
 

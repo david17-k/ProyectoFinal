@@ -15,17 +15,17 @@
         <th>Fecha</th>
         <th>Monto Total</th>
         <th>Detalle de Depósitos</th>
+        <th>Informacio cliente</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="transaccion : ${historial}">
         <td th:text="${transaccion.tipo}">1</td>
         <td th:text="${transaccion.localDate}">2025-01-01</td>
-        <td th:text="${transaccion.usuario}">3</td>
+        <td th:text="${transaccion.monto}">3</td>
         <td>
         </td>
-        <td>
-
+        <td th:text="${transaccion.usuario}">
         </td>
     </tr>
     </tbody>

@@ -1,15 +1,8 @@
 package com.proyectoestructura.estructuraDatos.Controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class TranferirController {
-
-
-
-
-
-
+public class TransferirController {
 }
