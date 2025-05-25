@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Transacciones</title>
+    <style>
+        /* Mismos estilos que antes */
+    </style>
+</head>
+<body>
+
+<h1>Historial de Transacciones</h1>
+
+<table id="historialTabla">
+    <thead>
+    <tr>
+        <th>Fecha</th>
+        <th>Tipo</th>
+        <th>Monto</th>
+        <th>Moneda</th>
+        <th>Descripción</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<div style="text-align: center;">
+    <button onclick="descargarHistorial()">Descargar historial</button>
+</div>
+
+<script>
+    function llenarTabla() {
+        fetch('/api/historial/transacciones')
+            .then(response => response.json())
+            .then(historial => {
+                const tbody = document.querySelector('#historialTabla tbody');
+                historial.forEach(t => {
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td>${t.fecha}</td>
+                        <td>${t.tipo}</td>
+                        <td>${t.monto.toFixed(2)}</td>
+                        <td>${t.moneda}</td>
+                        <td>${t.descripcion}</td>
+                    `;
+                    tbody.appendChild(fila);
+                });
+            });
+    }
+
+    function descargarHistorial() {
+        fetch('/api/historial/descargar')
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const enlace = document.createElement('a');
+                enlace.href = url;
+                enlace.download = 'historial.txt';
+                enlace.click();
+                window.URL.revokeObjectURL(url);
+            });
+    }
+
+    llenarTabla();
+</script>
+
+</body>
+</html>
