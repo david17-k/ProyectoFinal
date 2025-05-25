@@ -6,6 +6,7 @@ import com.proyectoestructura.estructuraDatos.model.Deposito;
 import com.proyectoestructura.estructuraDatos.model.Monedero;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
 import com.proyectoestructura.estructuraDatos.repositorio.CuentaRepositorio;
+import com.proyectoestructura.estructuraDatos.repositorio.HistorialRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,13 @@ public class ApiController {
 
     private final UsuarioRepositorio usuarioRepositorio;
     private final CuentaRepositorio cuentaRepositorio;
+    private final HistorialRepositorio historialRepositorio;
 
 
-    public ApiController(UsuarioRepositorio usuarioRepositorio, CuentaRepositorio cuentaRepositorio) {
+    public ApiController(UsuarioRepositorio usuarioRepositorio, CuentaRepositorio cuentaRepositorio, HistorialRepositorio historialRepositorio) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.cuentaRepositorio = cuentaRepositorio;
+        this.historialRepositorio = historialRepositorio;
     }
 
     @GetMapping
@@ -57,5 +60,20 @@ public class ApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @PostMapping("/guardarHistorial")
+    public Monedero guardarHistorial(@RequestBody Monedero monedero){
+        return historialRepositorio.save(monedero);
+    }
+
+    @PostMapping("/historial")
+    public List<Monedero>obtenerHistorial(){
+        Lista<Monedero>historial=new Lista<>();
+        for(Monedero h:cuentaRepositorio.findAll()){
+            System.out.println("Transaccion"+ h);
+        }
+        return historial.toList();
+    }
+
 }
 

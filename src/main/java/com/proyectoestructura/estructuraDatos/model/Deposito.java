@@ -18,6 +18,7 @@ private long idCuenta;
 
 
     private double deposito;
+
     public Deposito(){
 
     }

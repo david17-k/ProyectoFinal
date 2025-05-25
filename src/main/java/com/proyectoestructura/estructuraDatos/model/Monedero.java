@@ -42,6 +42,8 @@ public class Monedero {
     @Transient
     private Lista<Deposito> deposito = new Lista<>();
 
+
+
     public void serializarTodo() throws Exception {
         this.usuarioListaJson = Serializador.serializar(usuarioLista);
         this.transferenciaColaJson = Serializador.serializar(transferenciaCola);

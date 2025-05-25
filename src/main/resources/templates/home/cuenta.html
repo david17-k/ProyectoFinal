@@ -81,9 +81,11 @@
                 <button class="button ahorro">Ver ahorros</button>
             </div>
             <div class="categorydata">
+                <form th:action="@{historial}" method="post">
                 <img class="categoryimg"  src="/static/ImagenesWeb/historial.jpg" th:src="@{ImagenesWeb/historial.jpg}" alt="facto">
                 <h3 class="categorytitle">Conoce tu historial</h3>
-                <button class="button historial">Ver historial</button>
+                <button class="button historial" th:href="@{historial}">Ver historial</button>
+                </form>
             </div>
             <div class="categorydata">
                 <img class="categoryimg" src="/static/ImagenesWeb/total.jpg" th:src="@{ImagenesWeb/total.jpg}" alt="facto">

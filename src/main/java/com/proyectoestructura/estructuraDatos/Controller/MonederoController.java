@@ -25,13 +25,11 @@ public class MonederoController {
       Usuario usuario=(Usuario) httpSession.getAttribute("usuario");
         model.addAttribute("nombre",usuario.getNombre());
         Monedero monedero=(Monedero) httpSession.getAttribute("monedero");
-
             double saldo=0;
            for(Deposito c:monedero.getDeposito()) {
                saldo += c.getDeposito();
                model.addAttribute("saldo", "$" +saldo);
            }
-
         return "home/cuenta";
     }
 
@@ -46,8 +44,12 @@ public class MonederoController {
     @PostMapping("/depositar")
     public String deposito(@ModelAttribute("deposito")Deposito deposito,HttpSession httpSession){
        httpSession.setAttribute("deposito",deposito);
-
         return "home/Deposito";
+    }
+
+    @PostMapping("/historial")
+    public void obtenerHistorial(){
+        apiController.obtenerHistorial();
     }
 
 
