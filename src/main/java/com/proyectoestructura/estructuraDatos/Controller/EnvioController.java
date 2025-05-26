@@ -30,7 +30,6 @@ public class EnvioController {
     public String enviar(Model model,HttpSession httpSession){
         Usuario usuario=(Usuario)httpSession.getAttribute("Usuario");
         Monedero monedero=(Monedero)httpSession.getAttribute("monedero");
-
         model.addAttribute("saldo","$"+monedero.getSaldo());
         return "home/Envio";
     }

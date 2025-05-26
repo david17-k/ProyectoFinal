@@ -60,6 +60,8 @@ public class Monedero {
 
 
 
+
+
     public void serializarTodo() throws Exception {
         this.retirarJson=Serializador.serializar(retiros);
         this.depositoJson = Serializador.serializar(deposito);

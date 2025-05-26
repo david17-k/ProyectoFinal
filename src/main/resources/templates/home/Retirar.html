@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Retirar Dinero - Monedero Virtual</title>
@@ -77,26 +77,33 @@
         .back-button:hover {
           color: #000000;
         }
+          .error-message {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
     </style>
 </head>
 <body>
 <div class="withdraw-card">
     <h2>Retirar Dinero</h2>
-    <div class="balance-info">Saldo disponible: <strong id="saldoDisponible">$200.000</strong></div>
+    <form th:action="@{retirar}" method="post">
+    <div th:if="${error}" class="error-message" th:text="${error}"></div>
+    <div class="balance-info">Saldo disponible: <strong id="saldoDisponible" th:text="${sal}"></strong></div>
 
     <div class="form-group">
         <label for="montoRetiro">Monto a retirar (COP)</label>
-        <input type="number" id="montoRetiro" placeholder="Ej: 50000">
+        <input type="number" id="montoRetiro"  name="monto" placeholder="Ej: 50000" required>
     </div>
 
-    <button onclick="retirarDinero()">Retirar</button>
+    <button onclick="retirarDinero()" th:href="@{retirar}">Retirar</button>
+    </form>
     <div class="status-message" id="mensajeEstado"></div>
 
-    <button class="back-button" onclick="volverInicio()">← Volver al inicio</button>
 </div>
 
 <script>
-    let saldo = 200000; // Saldo inicial
+    let saldo = sal; // Saldo inicial
 
     function retirarDinero() {
       const monto = parseInt(document.getElementById("montoRetiro").value);
@@ -105,7 +112,6 @@
       if (!monto || monto <= 0) {
         mensaje.style.color = "red";
         mensaje.textContent = "Ingresa un monto válido para retirar.";
-        return;
       }
 
       if (monto > saldo) {
@@ -122,7 +128,7 @@
     }
 
     function volverInicio() {
-      window.location.href = 'inicio.html';
+      window.location.href = 'cuenta';
     }
 </script>
 </body>

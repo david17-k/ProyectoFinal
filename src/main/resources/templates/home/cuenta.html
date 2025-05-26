@@ -53,7 +53,7 @@
                               ¿Que quieres hacer?
                             </p>
                             <div class="homebut">
-                                <a href="#"  class="button">Actulizar</a>
+                                <a href="#"  class="button">Ver Informacion</a>
                                 <a href="#" class="button ">Rango</a>
                             </div>
                             <div class="saldodata">
@@ -111,12 +111,14 @@
                 </form>
             </div>
             <div class="productcontent">
+                <form th:action="@{retiro}" method="post">
                 <img src="/static/ImagenesWeb/retirar.jpg" th:src="@{ImagenesWeb/retirar.jpg}" alt="" class="productimg" />
                 <h3 class="producttitle">Retirar</h3>
                 <span class="productsubtitle"></span>
-                <button class="button productbutton">Retira
+                <button class="button productbutton" th:href="@{retiro}">Retira
                     <i class="bx bx-cart-alt buttonicon"></i>
                 </button>
+                </form>
             </div>
             <div class="productcontent">
                 <form th:action="@{envio}" method="post">

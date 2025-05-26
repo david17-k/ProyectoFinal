@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -23,12 +24,11 @@ public class HistorialController {
     @GetMapping("/transacciones")
     public List<Transaccion> obtenerHistorial() {
         return List.of(
-                new Transaccion("2025-05-20", "Depósito", 100.0, "USD", "Saldo inicial"),
-                new Transaccion("2025-05-21", "Retiro", 50.0, "USD", "Compra online"),
-                new Transaccion("2025-05-22", "Transferencia", 30.0, "USD", "A Juan Pérez")
+                new Transaccion(LocalTime.now(), "Depósito", 100.0, "USD", "Saldo inicial"),
+                new Transaccion(LocalTime.now(), "Retiro", 50.0, "USD", "Compra online"),
+                new Transaccion(LocalTime.now(), "Transferencia", 30.0, "USD", "A Juan Pérez")
         );
     }
-
     @GetMapping(value = "/descargar", produces = "text/plain")
     public ResponseEntity<byte[]> descargarHistorial() {
         StringBuilder contenido = new StringBuilder("Historial de Transacciones:\n\n");
