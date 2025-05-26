@@ -61,13 +61,12 @@ public class MonederoController {
         System.out.println("Historial");
         List<Transaccion> historial=apiController.obtenerHistorial();
         model.addAttribute("historial",historial);
-        return "home/prueba";
+        return "home/verHistorial";
     }
     @PostMapping("/historial")
     public String verHistorial(){
-        return "redirect:/cuenta";
+        return "home/verHistorial";
     }
-
     @PostMapping("/envio")
     public String enviar(@ModelAttribute Monedero monedero,HttpSession httpSession,Model model){
        httpSession.getAttribute("monedero");
