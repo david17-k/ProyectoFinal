@@ -2,67 +2,92 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Historial de Transacciones</title>
+    <title>Historial de Transacciones - Monedero Virtual</title>
     <style>
-        /* Mismos estilos que antes */
+        body {
+          font-family: Arial, sans-serif;
+          background: #003399;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+        }
+        .history-card {
+          background: #ffffff;
+          padding: 30px;
+          border-radius: 15px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          width: 500px;
+          max-height: 80vh;
+          overflow-y: auto;
+          color: #000000;
+        }
+        .history-card h2 {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+        .transaction {
+          border-bottom: 1px solid #ccc;
+          padding: 10px 0;
+        }
+        .transaction:last-child {
+          border-bottom: none;
+        }
+        .transaction strong {
+          display: block;
+          margin-bottom: 5px;
+        }
+        .transaction span {
+          font-size: 14px;
+          color: #444;
+        }
+        .back-button {
+          margin-top: 20px;
+          background-color: transparent;
+          color: #003399;
+          border: none;
+          text-decoration: underline;
+          font-weight: bold;
+          cursor: pointer;
+        }
+        .back-button:hover {
+          color: #000000;
+        }
     </style>
 </head>
 <body>
-
-<h1>Historial de Transacciones</h1>
-
-<table id="historialTabla">
-    <thead>
-    <tr>
-        <th>Fecha</th>
-        <th>Tipo</th>
-        <th>Monto</th>
-        <th>Moneda</th>
-        <th>Descripción</th>
-    </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-
-<div style="text-align: center;">
-    <button onclick="descargarHistorial()">Descargar historial</button>
+<div class="history-card">
+    <h2>Historial de Transacciones</h2>
+    <div id="listaTransacciones">
+        <!-- Transacciones simuladas -->
+    </div>
+    <button class="back-button" onclick="volverInicio()">← Volver al inicio</button>
 </div>
 
 <script>
-    function llenarTabla() {
-        fetch('/api/historial/transacciones')
-            .then(response => response.json())
-            .then(historial => {
-                const tbody = document.querySelector('#historialTabla tbody');
-                historial.forEach(t => {
-                    const fila = document.createElement('tr');
-                    fila.innerHTML = `
-                        <td>${t.fecha}</td>
-                        <td>${t.tipo}</td>
-                        <td>${t.monto.toFixed(2)}</td>
-                        <td>${t.moneda}</td>
-                        <td>${t.descripcion}</td>
-                    `;
-                    tbody.appendChild(fila);
-                });
-            });
-    }
+    const transacciones = [
+      { tipo: 'Depósito', monto: 100000, fecha: '2025-05-10', descripcion: 'Depósito bancario' },
+      { tipo: 'Retiro', monto: 50000, fecha: '2025-05-12', descripcion: 'Retiro en efectivo' },
+      { tipo: 'Transferencia', monto: 30000, fecha: '2025-05-14', descripcion: 'A Juan Pérez' },
+      { tipo: 'Redención de Puntos', monto: 100000, fecha: '2025-05-16', descripcion: 'Canje de 10 puntos' }
+    ];
 
-    function descargarHistorial() {
-        fetch('/api/historial/descargar')
-            .then(response => response.blob())
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const enlace = document.createElement('a');
-                enlace.href = url;
-                enlace.download = 'historial.txt';
-                enlace.click();
-                window.URL.revokeObjectURL(url);
-            });
-    }
+    const contenedor = document.getElementById('listaTransacciones');
 
-    llenarTabla();
+    transacciones.forEach(tx => {
+      const div = document.createElement('div');
+      div.className = 'transaction';
+      div.innerHTML = `
+        <strong>${tx.tipo} - $${tx.monto.toLocaleString('es-CO')} COP</strong>
+        <span>${tx.fecha} | ${tx.descripcion}</span>
+      `;
+      contenedor.appendChild(div);
+    });
+
+    function volverInicio() {
+      window.location.href = 'inicio.html';
+    }
 </script>
-
 </body>
 </html>
