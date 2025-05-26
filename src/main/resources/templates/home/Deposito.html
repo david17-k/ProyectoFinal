@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Depósito - Monedero Virtual</title>
@@ -68,9 +68,10 @@
 <body>
 <div class="deposit-card">
   <h2>Realizar Depósito</h2>
+  <form th:action="@{deposito}"method="post">
   <div class="form-group">
     <label for="monto">Monto a Depositar</label>
-    <input type="number" id="monto" placeholder="0.00">
+    <input type="number" id="monto" name="deposito" placeholder="0.00">
   </div>
   <div class="form-group">
     <label for="referencia">Número de Cuenta</label>
@@ -80,9 +81,8 @@
     <label for="descripcion">Descripción (opcional)</label>
     <textarea id="descripcion" rows="2" placeholder="Depósito desde banco..."></textarea>
   </div>
-  <button onclick="realizarDeposito()">Depositar</button>
-  <button onclick="window.history.back()">Volver al inicio</button>
-  <div class="status-message" id="estado"></div>
+  <button onclick="realizarDeposito()" th:href="@{depositar}">Depositar</button>
+  </form>
 </div>
 
 <script>

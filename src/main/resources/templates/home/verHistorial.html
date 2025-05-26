@@ -64,15 +64,13 @@
     </div>
     <button class="back-button" onclick="volverInicio()">← Volver al inicio</button>
 </div>
-
 <script>
     const transacciones = [
       { tipo: 'Depósito', monto: 100000, fecha: '2025-05-10', descripcion: 'Depósito bancario' },
       { tipo: 'Retiro', monto: 50000, fecha: '2025-05-12', descripcion: 'Retiro en efectivo' },
-      { tipo: 'Transferenciaa', monto: 30000, fecha: '2025-05-14', descripcion: 'A Juan Pérez' },
+      { tipo: 'Transferencia', monto: 30000, fecha: '2025-05-14', descripcion: 'A Juan Pérez' },
       { tipo: 'Redención de Puntos', monto: 100000, fecha: '2025-05-16', descripcion: 'Canje de 10 puntos' }
     ];
-
     const contenedor = document.getElementById('listaTransacciones');
 
     transacciones.forEach(tx => {

@@ -1,8 +1,12 @@
 package com.proyectoestructura.estructuraDatos.Controller;
 
 
+import com.proyectoestructura.estructuraDatos.model.Monedero;
 import com.proyectoestructura.estructuraDatos.model.Transferir;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
+import com.proyectoestructura.estructuraDatos.repositorio.MonederoRepositorio;
+import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,10 @@ public class EnvioController {
 
     @Autowired
     private ApiController apiController;
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+    @Autowired
+    private MonederoRepositorio monederoRepositorio;
 
     @GetMapping("/enviar")
     public String enviar(){
@@ -24,17 +32,29 @@ public class EnvioController {
     }
 
     @PostMapping("/enviar")
-    public String enviar(@ModelAttribute("Transferir") Transferir transferir, BindingResult bindingResult){
+    public String enviar(@ModelAttribute("Transferir") Transferir transferir, BindingResult bindingResult, HttpSession session){
         if(bindingResult.hasErrors()){
             return "home/Envio";
         }
-        List<Usuario>usuario=apiController.obtenerUsuario();
-        for(Usuario c:usuario){
-           if(transferir.getIdUsuario().equals(c.getIdCuenta())){
-               c.getMonedero().setSaldo(transferir.getMonto());
-           }
+        Usuario sesion=(Usuario)session.getAttribute("usuario");
+        Monedero monedero=monederoRepositorio.findByUsuarioId(sesion.getId()).orElseThrow(()->new IllegalStateException("No exite monedero"));
+        if(monedero.getSaldo()< transferir.getMonto()){
+            System.out.println("Saldo Insuficiente");
+            return "redirect:/cuenta";
+        }else {
+            double actulizarSaldo=0;
+            List<Usuario> usuario = apiController.obtenerUsuario();
+            for (Usuario c : usuario) {
+                if (transferir.getIdUsuario().equals(c.getIdCuenta())) {
+                    double calcular = transferir.getMonto() + c.getMonedero().getSaldo();
+                    c.getMonedero().setSaldo(calcular);
+                    usuarioRepositorio.save(c);
+                    actulizarSaldo= monedero.getSaldo()-transferir.getMonto();
+                    monedero.setSaldo(actulizarSaldo);
+                    monederoRepositorio.save(monedero);
+                }
+            }
         }
-
         return "redirect:/cuenta";
 
     }
