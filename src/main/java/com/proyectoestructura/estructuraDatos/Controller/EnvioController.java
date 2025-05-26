@@ -27,20 +27,26 @@ public class EnvioController {
     private MonederoRepositorio monederoRepositorio;
 
     @GetMapping("/enviar")
-    public String enviar(){
+    public String enviar(Model model,HttpSession httpSession){
+        Usuario usuario=(Usuario)httpSession.getAttribute("Usuario");
+        Monedero monedero=(Monedero)httpSession.getAttribute("monedero");
+
+        model.addAttribute("saldo","$"+monedero.getSaldo());
         return "home/Envio";
     }
 
     @PostMapping("/enviar")
-    public String enviar(@ModelAttribute("Transferir") Transferir transferir, BindingResult bindingResult, HttpSession session){
+    public String enviar(@ModelAttribute("Transferir") Transferir transferir, BindingResult bindingResult, HttpSession session,Model model){
         if(bindingResult.hasErrors()){
             return "home/Envio";
         }
         Usuario sesion=(Usuario)session.getAttribute("usuario");
         Monedero monedero=monederoRepositorio.findByUsuarioId(sesion.getId()).orElseThrow(()->new IllegalStateException("No exite monedero"));
         if(monedero.getSaldo()< transferir.getMonto()){
+            model.addAttribute("error", "Saldo insuficiente para la transferencia.");
+            model.addAttribute("saldo", "$" + monedero.getSaldo());
             System.out.println("Saldo Insuficiente");
-            return "redirect:/cuenta";
+            return "home/Envio";
         }else {
             double actulizarSaldo=0;
             List<Usuario> usuario = apiController.obtenerUsuario();

@@ -2,6 +2,7 @@ package com.proyectoestructura.estructuraDatos.Controller;
 
 
 import com.proyectoestructura.estructuraDatos.model.*;
+import com.proyectoestructura.estructuraDatos.repositorio.MonederoRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,16 @@ public class MonederoController {
     ModelController modelController;
     @Autowired
     ApiController apiController;
+    @Autowired
+    MonederoRepositorio monederoRepositorio;
 
     @GetMapping("/cuenta")
     public String bienvenida(Model model, HttpSession httpSession){
       Usuario usuario=(Usuario) httpSession.getAttribute("usuario");
         model.addAttribute("nombre",usuario.getNombre());
-        Monedero monedero = (Monedero) httpSession.getAttribute("monedero");
+        Monedero monedero = monederoRepositorio.findByUsuarioId(usuario.getId())
+                .orElseThrow(() -> new IllegalStateException("Monedero no encontrado"));
+        httpSession.setAttribute("monedero",monedero);
         double saldo = 0;
         if (monedero != null && monedero.getDeposito() != null) {
             for (Deposito c : monedero.getDeposito()) {
@@ -64,8 +69,10 @@ public class MonederoController {
     }
 
     @PostMapping("/envio")
-    public String enviar(@ModelAttribute Monedero monedero,HttpSession httpSession){
-        httpSession.setAttribute("transferir",monedero);
+    public String enviar(@ModelAttribute Monedero monedero,HttpSession httpSession,Model model){
+       httpSession.getAttribute("monedero");
+
+        model.addAttribute("saldo",monedero.getSaldo());
         return "home/Envio";
     }
 
