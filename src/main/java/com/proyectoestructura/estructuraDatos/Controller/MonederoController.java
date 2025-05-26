@@ -1,10 +1,7 @@
 package com.proyectoestructura.estructuraDatos.Controller;
 
 
-import com.proyectoestructura.estructuraDatos.model.Deposito;
-import com.proyectoestructura.estructuraDatos.model.Monedero;
-import com.proyectoestructura.estructuraDatos.model.Transaccion;
-import com.proyectoestructura.estructuraDatos.model.Usuario;
+import com.proyectoestructura.estructuraDatos.model.*;
 import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +27,12 @@ public class MonederoController {
         model.addAttribute("nombre",usuario.getNombre());
         Monedero monedero = (Monedero) httpSession.getAttribute("monedero");
         double saldo = 0;
-
         if (monedero != null && monedero.getDeposito() != null) {
             for (Deposito c : monedero.getDeposito()) {
                 saldo += c.getDeposito();
             }
         }
-        apiController.guardarTransaccion(monedero);
-        model.addAttribute("saldo", "$" + saldo);
+        model.addAttribute("saldo", "$" + monedero.getSaldo());
         return "home/cuenta";
 
     }
@@ -66,6 +61,12 @@ public class MonederoController {
     @PostMapping("/historial")
     public String verHistorial(){
         return "redirect:/cuenta";
+    }
+
+    @PostMapping("/envio")
+    public String enviar(@ModelAttribute Transferir transferir,HttpSession httpSession){
+        httpSession.setAttribute("transferir",transferir);
+        return "home/Envio";
     }
 
 }

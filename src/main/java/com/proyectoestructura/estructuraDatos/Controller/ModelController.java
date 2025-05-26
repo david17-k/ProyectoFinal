@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 public class ModelController {
 
 
-    private final Monedero monedero = new Monedero();
 
+     private Monedero monedero;
 
     @Autowired
     private ApiController apiController;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+
 
 
     public boolean depositar(int deposito) {
@@ -47,13 +49,9 @@ public class ModelController {
         monedero.getInicioSeccion().push(usuario);
     }
 
-    public void depositar(Deposito deposito){
-        if(monedero.getDeposito().isEmpti()) {
-            monedero.getDeposito().agregarPrimera(deposito);
-        }else{
-            actuliarSaldo(monedero.getDeposito());
-        }
-        monedero.getDeposito().mostrarContenido();
+    public void depositar(Deposito deposito,Monedero monedero){
+       monedero.getDeposito().agregarPrimera(deposito);
+       monedero.getDeposito().mostrarContenido();
     }
 
     public double actulizar(){

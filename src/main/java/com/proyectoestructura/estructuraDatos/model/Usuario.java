@@ -22,6 +22,14 @@ public class Usuario {
     private Monedero monedero;
 
 
+    public Usuario(String apellido, String cedula, long id, String idCuenta, Monedero monedero, String nombre) {
+        this.apellido = apellido;
+        this.cedula = cedula;
+        this.id = id;
+        this.idCuenta = idCuenta;
+        this.monedero = monedero;
+        this.nombre = nombre;
+    }
 
     public Usuario(String apellido, String cedula, String idCuenta, String nombre) {
         this.apellido = apellido;

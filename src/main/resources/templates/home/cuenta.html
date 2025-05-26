@@ -119,12 +119,14 @@
                 </button>
             </div>
             <div class="productcontent">
+                <form th:action="@{envio}" method="post">
                 <img src="/static/ImagenesWeb/transferir.png" th:src="@{ImagenesWeb/transferir.png}" alt="" class="productimg" />
                 <h3 class="producttitle">Transferir</h3>
                 <span class="productsubtitle"></span>
-                <button class="button productbutton">Transfiere
+                <button class="button productbutton" th:href="@{envio}">Transfiere
                     <i class="bx bx-cart-alt buttonicon"></i>
                 </button>
+                </form>
             </div>
             <div class="productcontent">
                 <img src="/static/ImagenesWeb/puntos.png"  th:src="@{ImagenesWeb/puntos.png}" alt="" class="productimg" />

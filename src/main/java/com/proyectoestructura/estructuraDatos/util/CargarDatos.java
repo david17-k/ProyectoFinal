@@ -1,6 +1,7 @@
 package com.proyectoestructura.estructuraDatos.util;
 
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
+import com.proyectoestructura.estructuraDatos.model.Monedero;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
 import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import org.springframework.boot.CommandLineRunner;

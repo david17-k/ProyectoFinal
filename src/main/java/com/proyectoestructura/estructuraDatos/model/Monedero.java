@@ -62,7 +62,6 @@ public class Monedero {
 
     public void serializarTodo() throws Exception {
         this.retirarJson=Serializador.serializar(retiros);
-        this.inicioSeccionJson = Serializador.serializar(inicioSeccion);
         this.depositoJson = Serializador.serializar(deposito);
         this.historialJson=Serializador.serializar(historial);
 
@@ -70,7 +69,6 @@ public class Monedero {
     }
 
     public void deserializarTodo() throws Exception {
-        if (inicioSeccionJson != null) this.inicioSeccion = Serializador.deserializarColaUsuario(inicioSeccionJson);
         if (depositoJson != null) this.deposito = Serializador.deserializarListaDeposito(depositoJson);
         if(retirarJson!=null)this.retiros=Serializador.deserealizarListaRetiro(retirarJson);
         if(historialJson!=null)this.historial=Serializador.deserealizarListaHistorial(historialJson);

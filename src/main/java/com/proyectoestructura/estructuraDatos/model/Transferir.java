@@ -17,6 +17,8 @@ public class Transferir {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+
+    private String idUsuario;
     private double monto;
     private String descripcion;
 
