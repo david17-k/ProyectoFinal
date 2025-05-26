@@ -36,15 +36,14 @@ public class DepositoController {
         Usuario usuario=(Usuario) httpSession.getAttribute("usuario");
        if(monedero!=null){
            monedero.getDeposito().agregarPrimera(deposito);
-           apiController.guardarDeposito(deposito);
-           httpSession.setAttribute("monedero",monedero);
-           Transaccion transaccion=new Transaccion();
+           Transaccion transaccion =new Transaccion();
            transaccion.setTipo("Deposito");
            transaccion.setMonto(deposito.getDeposito());
-           transaccion.setLocalDate(LocalDate.now());
            transaccion.setUsuario(usuario);
-
-           apiController.guardarHistorial(transaccion);
+           transaccion.setLocalDate(LocalDate.now());
+         monedero.getHistorial().agregarPrimera(transaccion);
+         apiController.guardarHistorial(transaccion);
+           System.out.println("Deposito"+deposito.toString());
        }
         return "redirect:/cuenta";
         }

@@ -16,7 +16,7 @@ public class Monedero {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idCuenta;
+    private long id;
 
     @Lob
     private String usuarioListaJson;
@@ -30,9 +30,17 @@ public class Monedero {
     @Lob
     private String depositoJson;
 
-    @Transient
-    private Lista<Usuario> usuarioLista = new Lista<>();
+    @Lob
+    private String retirarJson;
 
+    @Lob
+    private String historialJson;
+
+    @OneToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
+    private Usuario usuario;
+
+    private double saldo=0;
 
 
     @Transient
@@ -41,19 +49,31 @@ public class Monedero {
     @Transient
     private Lista<Deposito> deposito = new Lista<>();
 
+    @Transient
+    private Lista<Transferir>tranferir=new Lista<>();
+
+    @Transient
+    private Lista<Retiro>retiros=new Lista<>();
+
+    @Transient
+    private Lista<Transaccion>historial=new Lista<>();
+
 
 
     public void serializarTodo() throws Exception {
-        this.usuarioListaJson = Serializador.serializar(usuarioLista);
+        this.retirarJson=Serializador.serializar(retiros);
         this.inicioSeccionJson = Serializador.serializar(inicioSeccion);
         this.depositoJson = Serializador.serializar(deposito);
+        this.historialJson=Serializador.serializar(historial);
+
 
     }
 
     public void deserializarTodo() throws Exception {
-        if (usuarioListaJson != null) this.usuarioLista = Serializador.deserializarListaUsuario(usuarioListaJson);
         if (inicioSeccionJson != null) this.inicioSeccion = Serializador.deserializarColaUsuario(inicioSeccionJson);
         if (depositoJson != null) this.deposito = Serializador.deserializarListaDeposito(depositoJson);
+        if(retirarJson!=null)this.retiros=Serializador.deserealizarListaRetiro(retirarJson);
+        if(historialJson!=null)this.historial=Serializador.deserealizarListaHistorial(historialJson);
     }
 }
 

@@ -6,8 +6,9 @@ import com.proyectoestructura.estructuraDatos.model.Deposito;
 import com.proyectoestructura.estructuraDatos.model.Monedero;
 import com.proyectoestructura.estructuraDatos.model.Transaccion;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
-import com.proyectoestructura.estructuraDatos.repositorio.CuentaRepositorio;
+
 import com.proyectoestructura.estructuraDatos.repositorio.HistorialRepositorio;
+import com.proyectoestructura.estructuraDatos.repositorio.MonederoRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,14 @@ public class ApiController {
 
 
     private final UsuarioRepositorio usuarioRepositorio;
-    private final CuentaRepositorio cuentaRepositorio;
     private final HistorialRepositorio historialRepositorio;
+    private final MonederoRepositorio monederoRepositorio;
 
 
-    public ApiController(UsuarioRepositorio usuarioRepositorio, CuentaRepositorio cuentaRepositorio, HistorialRepositorio historialRepositorio) {
+    public ApiController(UsuarioRepositorio usuarioRepositorio, HistorialRepositorio historialRepositorio,MonederoRepositorio monederoRepositorio) {
         this.usuarioRepositorio = usuarioRepositorio;
-        this.cuentaRepositorio = cuentaRepositorio;
         this.historialRepositorio = historialRepositorio;
+        this.monederoRepositorio= monederoRepositorio;
     }
 
     @GetMapping
@@ -40,27 +41,6 @@ public class ApiController {
         return listaUsuario.toList();
     }
 
-    @PostMapping("/usuarios")
-    public Usuario guardarUsuario(@RequestBody Usuario usuario) {
-        return usuarioRepositorio.save(usuario);
-    }
-
-    @PostMapping("/depositos")
-    public ResponseEntity<Deposito> guardarDeposito(@RequestBody Deposito deposito) {
-        try {
-            Monedero monedero = cuentaRepositorio.findById(1L).orElse(new Monedero());
-            if (monedero.getDepositoJson() != null) {
-                monedero.getDeposito();
-            }
-            monedero.getDeposito().agregarPrimera(deposito);
-            monedero.setDeposito(monedero.getDeposito());
-            cuentaRepositorio.save(monedero);
-
-            return ResponseEntity.ok(deposito);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
     @PostMapping("/guardarHistorial")
     public Transaccion guardarHistorial(@RequestBody Transaccion transaccion){
@@ -77,6 +57,22 @@ public class ApiController {
         }
         return historial.toList();
     }
+
+    @PostMapping("/guardarTransaccion")
+    public Monedero guardarTransaccion(@RequestBody Monedero monedero){
+        return monederoRepositorio.save(monedero);
+    }
+
+    @GetMapping("/transaccion")
+    public List<Deposito>obtenerTransaccion(){
+        Lista<Deposito>depositos=new Lista<>();
+        for(Monedero deposito:monederoRepositorio.findAll()){
+            depositos=deposito.getDeposito();
+        }
+        return depositos.toList();
+    }
+
+
 
 }
 

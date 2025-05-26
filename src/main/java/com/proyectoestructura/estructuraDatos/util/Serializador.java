@@ -8,6 +8,8 @@ import com.proyectoestructura.estructuraDatos.estructura.Cola;
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
 import com.proyectoestructura.estructuraDatos.model.Deposito;
 
+import com.proyectoestructura.estructuraDatos.model.Retiro;
+import com.proyectoestructura.estructuraDatos.model.Transaccion;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
 
 import java.util.List;
@@ -54,6 +56,20 @@ public class Serializador {
         data.forEach(cola::push);
         return cola;
     }
+
+    public static Lista<Retiro>deserealizarListaRetiro(String json) throws JsonProcessingException {
+        List<Retiro>data=mapper.readValue(json, new TypeReference<>(){});
+        Lista<Retiro>lista=new Lista<>();
+        data.forEach(lista::agregarPrimera);
+        return lista;
+    }
+    public static Lista<Transaccion>deserealizarListaHistorial(String json) throws JsonProcessingException {
+        List<Transaccion>data=mapper.readValue(json, new TypeReference<>(){});
+        Lista<Transaccion>lista=new Lista<>();
+        data.forEach(lista::agregarPrimera);
+        return lista;
+    }
+
 
     
 }

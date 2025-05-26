@@ -4,6 +4,7 @@ package com.proyectoestructura.estructuraDatos.Controller;
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
 import com.proyectoestructura.estructuraDatos.model.Monedero;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
+import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import com.proyectoestructura.estructuraDatos.util.CargarDatos;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
+import java.util.Optional;
+
 @Controller
 public class LoggionController {
 
   private final ModelController modelController;
    private final CargarDatos cargarDatos;
+   private final UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
-    public LoggionController(ModelController modelController, CargarDatos cargarDatos) {
+    public LoggionController(ModelController modelController, CargarDatos cargarDatos, UsuarioRepositorio usuarioRepositorio) {
         this.modelController = modelController;
         this.cargarDatos = cargarDatos;
+        this.usuarioRepositorio = usuarioRepositorio;
     }
 
 
@@ -34,20 +39,22 @@ public class LoggionController {
     public String procesarLogin(
             @RequestParam("usuario") String usuario,
             @RequestParam("password") String contrasena, HttpSession httpSession) {
-        Lista<Usuario>usuarios=cargarDatos.obtenerUsuarios();
-        for(Usuario c:usuarios){
-            if(c.getNombre().equals(usuario) && c.getIdCuenta().equals(contrasena)){
-               httpSession.setAttribute("usuario",c);
-                if (httpSession.getAttribute("monedero") == null) {
-                    Monedero monedero = new Monedero();
-                    monedero.getUsuarioLista().agregarPrimera(c);
-                    httpSession.setAttribute("monedero", monedero);
-                }
-                return "redirect:/cuenta";
+            Optional<Usuario> encontrado=usuarioRepositorio.findByNombreAndIdCuenta(usuario,contrasena);
+            if(encontrado.isPresent()){
+                Usuario usuarioLog=encontrado.get();
+                httpSession.setAttribute("usuario",usuarioLog);
+                if(usuarioLog.getMonedero()==null){
+                    Monedero monedero=new Monedero();
+                    monedero.setUsuario(usuarioLog);
+                    monedero.setSaldo(0);
+                    usuarioLog.setMonedero(monedero);
+                    usuarioRepositorio.save(usuarioLog);
             }
-
-        }
-        return "home/login";
+                httpSession.setAttribute("monedero",usuarioLog.getMonedero());
+                return "redirect:/cuenta";
+        }else {
+                return "home/login";
+            }
     }
 
     @GetMapping ("/crear")

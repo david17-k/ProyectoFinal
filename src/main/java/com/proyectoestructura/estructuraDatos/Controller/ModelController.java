@@ -32,36 +32,16 @@ public class ModelController {
     }
 
     public void crearCuenta(Usuario usuario) {
-        monedero.getUsuarioLista().agregarPrimera(usuario);
-        monedero.getUsuarioLista().mostrarContenido();
-        apiController.guardarUsuario(usuario);
         System.out.println("Usuario " + usuario.getNombre() + "Guaradado");
     }
 
 
-    public boolean verificarInicio(String nombre, String id) {
-        boolean encontrado = false;
-        for (Usuario u : monedero.getUsuarioLista()) {
-            if (nombre.equals(u.getNombre()) && id.equals(u.getIdCuenta())) {
-                System.out.println("Registrado");
-                encontrado = true;
-            }
-        }
-        return encontrado;
-    }
+
 
     public void registarTransaccion() {
 
     }
 
-    public Usuario guardarLog(String usuario) {
-        for (Usuario usuario1 : monedero.getUsuarioLista()) {
-            if (usuario1.getNombre().equals(usuario)) {
-                return usuario1;
-            }
-        }
-        return null;
-    }
 
     public void obtenerUsuario(Usuario usuario){
         monedero.getInicioSeccion().push(usuario);
@@ -70,7 +50,6 @@ public class ModelController {
     public void depositar(Deposito deposito){
         if(monedero.getDeposito().isEmpti()) {
             monedero.getDeposito().agregarPrimera(deposito);
-            apiController.guardarDeposito(deposito);
         }else{
             actuliarSaldo(monedero.getDeposito());
         }

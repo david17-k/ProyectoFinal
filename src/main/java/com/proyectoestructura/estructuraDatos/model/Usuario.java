@@ -1,10 +1,7 @@
 package com.proyectoestructura.estructuraDatos.model;
 
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.stereotype.Controller;
 
 
@@ -21,18 +18,28 @@ public class Usuario {
     private String cedula;
     private String idCuenta;
 
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Monedero monedero;
 
 
-    public Usuario(String apellido, String cedula, long id, String idCuenta, String nombre) {
+
+    public Usuario(String apellido, String cedula, String idCuenta, String nombre) {
         this.apellido = apellido;
         this.cedula = cedula;
-        this.id = id;
         this.idCuenta = idCuenta;
         this.nombre = nombre;
     }
 
     public Usuario(){
 
+    }
+
+    public Monedero getMonedero() {
+        return monedero;
+    }
+
+    public void setMonedero(Monedero monedero) {
+        this.monedero = monedero;
     }
 
     public long getId() {

@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CrearCuenta {
 @Autowired
    private ModelController modelController;
+@Autowired
+private final UsuarioRepositorio usuarioRepositorio;
 
-
-    private final ApiController apiController;
-
-    public CrearCuenta(ApiController apiController) {
-        this.apiController = apiController;
+    public CrearCuenta(UsuarioRepositorio usuarioRepositorio) {
+        this.usuarioRepositorio = usuarioRepositorio;
     }
+
 
     @GetMapping("/crearcuenta")
     public String log(Model model){
@@ -37,9 +37,8 @@ public class CrearCuenta {
             return "home/crearcuenta";
         }
         modelController.crearCuenta(usuario);
-
-        apiController.guardarUsuario(usuario);
-        return "redirect:/login";
+        usuarioRepositorio.save(usuario);
+        return "redirect:/loggin";
     }
 
 

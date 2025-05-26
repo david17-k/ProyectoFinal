@@ -28,15 +28,19 @@ public class MonederoController {
     public String bienvenida(Model model, HttpSession httpSession){
       Usuario usuario=(Usuario) httpSession.getAttribute("usuario");
         model.addAttribute("nombre",usuario.getNombre());
-        Monedero monedero=(Monedero) httpSession.getAttribute("monedero");
-            double saldo=0;
-           for(Deposito c:monedero.getDeposito()) {
-               saldo += c.getDeposito();
-               model.addAttribute("saldo", "$" +saldo);
-           }
-        return "home/cuenta";
-    }
+        Monedero monedero = (Monedero) httpSession.getAttribute("monedero");
+        double saldo = 0;
 
+        if (monedero != null && monedero.getDeposito() != null) {
+            for (Deposito c : monedero.getDeposito()) {
+                saldo += c.getDeposito();
+            }
+        }
+        apiController.guardarTransaccion(monedero);
+        model.addAttribute("saldo", "$" + saldo);
+        return "home/cuenta";
+
+    }
     @GetMapping("/depositar")
     public String depositar(Model model,HttpSession httpSession){
         Deposito deposito1=(Deposito)httpSession.getAttribute("deposito");
@@ -58,6 +62,10 @@ public class MonederoController {
         List<Transaccion> historial=apiController.obtenerHistorial();
         model.addAttribute("historial",historial);
         return "home/prueba";
+    }
+    @PostMapping("/historial")
+    public String verHistorial(){
+        return "redirect:/cuenta";
     }
 
 }
