@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Retirar Dinero - Monedero Virtual</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background: #003399;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+        }
+        .withdraw-card {
+          background: #ffffff;
+          padding: 30px;
+          border-radius: 15px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          width: 380px;
+          color: #000000;
+        }
+        .withdraw-card h2 {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+        .balance-info {
+          font-size: 18px;
+          margin-bottom: 15px;
+          text-align: center;
+        }
+        .form-group {
+          margin-bottom: 15px;
+        }
+        .form-group label {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+        .form-group input {
+          width: 100%;
+          padding: 10px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+          background-color: #f8f8f8;
+          color: #000000;
+        }
+        button {
+          width: 100%;
+          padding: 12px;
+          background-color: #000000;
+          border: none;
+          color: white;
+          font-size: 16px;
+          border-radius: 10px;
+          cursor: pointer;
+          margin-top: 10px;
+        }
+        button:hover {
+          background-color: #333333;
+        }
+        .status-message {
+          text-align: center;
+          margin-top: 15px;
+          font-weight: bold;
+        }
+        .back-button {
+          margin-top: 20px;
+          background-color: transparent;
+          color: #003399;
+          border: none;
+          text-decoration: underline;
+          font-weight: bold;
+          cursor: pointer;
+        }
+        .back-button:hover {
+          color: #000000;
+        }
+    </style>
+</head>
+<body>
+<div class="withdraw-card">
+    <h2>Retirar Dinero</h2>
+    <div class="balance-info">Saldo disponible: <strong id="saldoDisponible">$200.000</strong></div>
+
+    <div class="form-group">
+        <label for="montoRetiro">Monto a retirar (COP)</label>
+        <input type="number" id="montoRetiro" placeholder="Ej: 50000">
+    </div>
+
+    <button onclick="retirarDinero()">Retirar</button>
+    <div class="status-message" id="mensajeEstado"></div>
+
+    <button class="back-button" onclick="volverInicio()">← Volver al inicio</button>
+</div>
+
+<script>
+    let saldo = 200000; // Saldo inicial
+
+    function retirarDinero() {
+      const monto = parseInt(document.getElementById("montoRetiro").value);
+      const mensaje = document.getElementById("mensajeEstado");
+
+      if (!monto || monto <= 0) {
+        mensaje.style.color = "red";
+        mensaje.textContent = "Ingresa un monto válido para retirar.";
+        return;
+      }
+
+      if (monto > saldo) {
+        mensaje.style.color = "red";
+        mensaje.textContent = "Fondos insuficientes para este retiro.";
+        return;
+      }
+
+      saldo -= monto;
+      document.getElementById("saldoDisponible").textContent = `$${saldo.toLocaleString('es-CO')}`;
+      document.getElementById("montoRetiro").value = "";
+      mensaje.style.color = "green";
+      mensaje.textContent = `Has retirado $${monto.toLocaleString('es-CO')} COP con éxito.`;
+    }
+
+    function volverInicio() {
+      window.location.href = 'inicio.html';
+    }
+</script>
+</body>
+</html>
