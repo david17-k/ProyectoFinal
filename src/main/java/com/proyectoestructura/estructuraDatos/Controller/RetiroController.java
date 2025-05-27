@@ -3,7 +3,9 @@ package com.proyectoestructura.estructuraDatos.Controller;
 
 import com.proyectoestructura.estructuraDatos.model.Monedero;
 import com.proyectoestructura.estructuraDatos.model.Retiro;
+import com.proyectoestructura.estructuraDatos.model.Transaccion;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
+import com.proyectoestructura.estructuraDatos.repositorio.HistorialRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.MonederoRepositorio;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +15,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.context.annotation.ApplicationScope;
+
+import java.time.LocalTime;
 
 @Controller
 public class RetiroController {
 
     @Autowired
     private MonederoRepositorio monederoRepositorio;
+
+    @Autowired
+    private HistorialRepositorio historialRepositorio;
+    @Autowired
+    private ApiController apiController;
 
     @GetMapping("/retirar")
     public String mostrarFormularioRetiro(Model model, HttpSession session) {
@@ -52,7 +62,15 @@ public class RetiroController {
         monedero.setSaldo(monedero.getSaldo() - retiro.getMonto());
         monederoRepositorio.save(monedero);
         session.setAttribute("monedero", monedero);
-
+        Transaccion transaccion=new Transaccion();
+        transaccion.setFecha(LocalTime.now());
+        transaccion.setMoneda("Peso");
+        transaccion.setUsuario(usuario);
+        transaccion.setMonto(retiro.getMonto());
+        transaccion.setTipo("Retiro");
+        transaccion.setDescripcion("Retiro de cuenta");
+        historialRepositorio.save(transaccion);
+        apiController.guardarHistorial(transaccion);
         return "redirect:/cuenta";
     }
 }

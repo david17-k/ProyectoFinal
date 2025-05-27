@@ -1,9 +1,9 @@
 package com.proyectoestructura.estructuraDatos.model;
 
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
-import com.proyectoestructura.estructuraDatos.model.service.CuentaService;
+
 import com.proyectoestructura.estructuraDatos.model.service.DepositoService;
-import com.proyectoestructura.estructuraDatos.model.service.SaldoService;
+
 
 import java.util.List;
 

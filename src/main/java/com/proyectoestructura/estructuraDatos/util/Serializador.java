@@ -6,11 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.proyectoestructura.estructuraDatos.estructura.Cola;
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
-import com.proyectoestructura.estructuraDatos.model.Deposito;
-
-import com.proyectoestructura.estructuraDatos.model.Retiro;
-import com.proyectoestructura.estructuraDatos.model.Transaccion;
-import com.proyectoestructura.estructuraDatos.model.Usuario;
+import com.proyectoestructura.estructuraDatos.model.*;
 
 import java.util.List;
 
@@ -56,6 +52,26 @@ public class Serializador {
         data.forEach(cola::push);
         return cola;
     }
+    public static Cola<Deposito> deserializarColaDeposito(String json) throws Exception {
+        List<Deposito> data = mapper.readValue(json, new TypeReference<>() {});
+        Cola<Deposito> cola = new Cola<>();
+        data.forEach(cola::push);
+        return cola;
+    }
+    public static Cola<Retiro> deserializarColaRetiro(String json) throws Exception {
+        List<Retiro> data = mapper.readValue(json, new TypeReference<>() {});
+        Cola<Retiro> cola = new Cola<>();
+        data.forEach(cola::push);
+        return cola;
+    }
+    public static Cola<Transferir> deserializarColaTransferir(String json) throws Exception {
+        List<Transferir> data = mapper.readValue(json, new TypeReference<>() {});
+        Cola<Transferir> cola = new Cola<>();
+        data.forEach(cola::push);
+        return cola;
+    }
+
+
 
     public static Lista<Retiro>deserealizarListaRetiro(String json) throws JsonProcessingException {
         List<Retiro>data=mapper.readValue(json, new TypeReference<>(){});

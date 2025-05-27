@@ -2,8 +2,10 @@ package com.proyectoestructura.estructuraDatos.Controller;
 
 
 import com.proyectoestructura.estructuraDatos.model.Monedero;
+import com.proyectoestructura.estructuraDatos.model.Transaccion;
 import com.proyectoestructura.estructuraDatos.model.Transferir;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
+import com.proyectoestructura.estructuraDatos.repositorio.HistorialRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.MonederoRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -25,6 +28,8 @@ public class EnvioController {
     private UsuarioRepositorio usuarioRepositorio;
     @Autowired
     private MonederoRepositorio monederoRepositorio;
+    @Autowired
+    private HistorialRepositorio historialRepositorio;
 
     @GetMapping("/enviar")
     public String enviar(Model model,HttpSession httpSession){
@@ -47,6 +52,7 @@ public class EnvioController {
             System.out.println("Saldo Insuficiente");
             return "home/Envio";
         }else {
+            Transaccion transaccion=new Transaccion();
             double actulizarSaldo=0;
             List<Usuario> usuario = apiController.obtenerUsuario();
             for (Usuario c : usuario) {
@@ -57,6 +63,13 @@ public class EnvioController {
                     actulizarSaldo= monedero.getSaldo()-transferir.getMonto();
                     monedero.setSaldo(actulizarSaldo);
                     monederoRepositorio.save(monedero);
+                    transaccion.setTipo("Transferencia");
+                    transaccion.setMonto(transferir.getMonto());
+                    transaccion.setUsuario(sesion);
+                    transaccion.setMoneda("Peso");
+                    transaccion.setFecha(LocalTime.now());
+                    historialRepositorio.save(transaccion);
+                    apiController.guardarHistorial(transaccion);
                 }
             }
         }

@@ -88,5 +88,16 @@ public class MonederoController {
         return "home/Retirar";
     }
 
+    @GetMapping("/retiroPrograma")
+    public String programarRetiro(){
+        return "home/programarRetiro";
+    }
+
+    @PostMapping("/retiroPrograma")
+    public String programarRetiro(@ModelAttribute ProgramarTransferencias programarTransferencias,HttpSession session,Model model){
+        session.setAttribute("programarRetiro",programarTransferencias);
+        return "home/programarRetiro";
+    }
+
 
 }

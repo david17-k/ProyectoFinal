@@ -31,6 +31,9 @@
                     <a href="#product" class="navLink">
                         Servicios </a>
                 </li>
+                <li class="navItem">
+                    <a href="#programar" class="navLink">Programar Transacciones</a>
+                </li>
             </ul>
             <div class="navClose" id="nav-close">
                 <i class="bx bx-x"></i>
@@ -76,9 +79,9 @@
         <h2 class="sectiontitle"> Consultas <br> Categorias</h2>
         <div class="categorycontainer container grid">
             <div class="categorydata">
-                <img class="categoryimg" src="/static/ImagenesWeb/ahorro.jpg" th:src="@{ImagenesWeb/ahorro.jpg}" alt="facto">
-                <h3 class="categorytitle">¿Cuanto has ahorrado?</h3>
-                <button class="button ahorro">Ver ahorros</button>
+                    <img class="categoryimg"  src="/static/ImagenesWeb/programar.jpg" th:src="@{ImagenesWeb/programar.jpg}" alt="facto">
+                    <h3 class="categorytitle">Cuenta ahorros</h3>
+                    <button class="button historial"  >Ver ahorros</button>
             </div>
             <div class="categorydata">
                 <form th:action="@{historial}" method="get">
@@ -146,16 +149,38 @@
                     <i class="bx bx-cart-alt buttonicon"></i>
                 </button>
             </div>
+        </div>
+    </section>
+    <!--Puntos-->
+    <section class="section product" id="programar">
+        <h2 class="sectiontitle">Tipos de transaccion</h2>
+        <div class="productcontainer container grid">
             <div class="productcontent">
-                <img src="/static/ImagenesWeb/reloj.png" th:src="@{ImagenesWeb/reloj.png}" alt="" class="productimg" />
-                <h3 class="producttitle">Progrmar transaccion</h3>
-                <span class="productsubtitle"></span>
-                <button class="button productbutton">Programar
-                    <i class="bx bx-cart-alt buttonicon"></i>
-                </button>
+                    <img src="/static/ImagenesWeb/programar.jpg" th:src="@{ImagenesWeb/programar.jpg}" alt="" class="productimg" />
+                    <h3 class="producttitle">Programar Deposito</h3>
+                    <span class="productsubtitle"></span>
+                    <button class="button productbutton">Deposita
+                        <i class="bx bx-cart-alt buttonicon"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="productcontent">
+                    <img src="/static/ImagenesWeb/programarRetiro.jpg" th:src="@{ImagenesWeb/programarRetiro.jpg}" alt="" class="productimg" />
+                    <h3 class="producttitle">Programar Retiros</h3>
+                    <span class="productsubtitle"></span>
+                    <button class="button productbutton">Retiro
+                        <i class="bx bx-cart-alt buttonicon"></i>
+                    </button>
+            </div>
+            <div class="productcontent">
+                    <img src="/static/ImagenesWeb/programarTraspasos.jpg" th:src="@{ImagenesWeb/programarTraspasos.jpg}" alt="" class="productimg" />
+                    <h3 class="producttitle">Programar Transferencias</h3>
+                    <span class="productsubtitle"></span>
+                    <button class="button productbutton" >Transfiere
+                        <i class="bx bx-cart-alt buttonicon"></i>
+                    </button>
             </div>
         </div>
-
     </section>
 </main>
 </body>
