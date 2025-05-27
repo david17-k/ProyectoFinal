@@ -63,13 +63,7 @@ public class LoggionController {
                         return monederoRepositorio.save(nuevo);
                     });
             System.out.println(usuarioLog.getId());
-            ProgramarTransferencias programarTransferencias=programarTransferenciaRepositorio.findByUsuarioId(usuarioLog.getId()).orElseGet(() -> {
-                ProgramarTransferencias nuevo=new ProgramarTransferencias();
-                nuevo.setUsuario(usuarioLog);
-                return programarTransferenciaRepositorio.save(nuevo);
-            });
             httpSession.setAttribute("monedero", monedero);
-            httpSession.setAttribute("programar",programarTransferencias);
             return "redirect:/cuenta";
         }
         return "home/login";

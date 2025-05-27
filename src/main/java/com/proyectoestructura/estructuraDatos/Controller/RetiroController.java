@@ -56,7 +56,7 @@ public class RetiroController {
         if (monedero.getSaldo() < retiro.getMonto()) {
             model.addAttribute("error", "Saldo insuficiente.");
             model.addAttribute("saldo", "$" + monedero.getSaldo());
-            return "home/Retirar";
+            return "home/Deposito";
         }
 
         monedero.setSaldo(monedero.getSaldo() - retiro.getMonto());

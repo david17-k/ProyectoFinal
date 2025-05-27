@@ -1,5 +1,8 @@
 package com.proyectoestructura.estructuraDatos.estructura;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cola <T>{
 
 
@@ -21,7 +24,6 @@ public class Cola <T>{
     public T poll(){
         if(verificar()){
             System.out.println("Vacia");
-
         }
         T dato= firts.getDato();
         firts=firts.getSiguienteNodo();
@@ -34,7 +36,7 @@ public class Cola <T>{
     }
 
 
-    private boolean verificar() {
+    public boolean verificar() {
         return firts==null;
     }
 
@@ -50,9 +52,20 @@ public class Cola <T>{
 
     }
 
+    public List<T> toList() {
+        List<T> elementos = new ArrayList<>();
+        Nodo<T> actual = firts; // o como llames al primer nodo
+        while (actual != null) {
+            elementos.add(actual.getDato());
+            actual = actual.getSiguienteNodo();
+        }
+        return elementos;
+    }
+
     public void ver(){
         Nodo<T>aux=firts;
         while (aux!=null){
+            System.out.println("Datos");
             System.out.println(aux.getDato());
             aux=aux.getSiguienteNodo();
         }

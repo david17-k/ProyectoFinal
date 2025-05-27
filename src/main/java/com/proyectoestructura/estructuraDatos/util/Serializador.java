@@ -17,6 +17,9 @@ public class Serializador {
     public static <T>String serializar(Lista<T>lista) throws JsonProcessingException {
         return objectMapper.writeValueAsString(lista.toList());
     }
+    public static <T> String serializar(Cola<T> cola) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(cola.toList());
+    }
 
     public static Lista<Usuario> deserializarUsuarios(String json) throws Exception {
         Lista<Usuario> lista = new Lista<>();
@@ -28,9 +31,6 @@ public class Serializador {
     }
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static <T> String serializar(Object estructura) throws Exception {
-        return mapper.writeValueAsString(((Iterable<T>) estructura).iterator());
-    }
 
     public static Lista<Usuario> deserializarListaUsuario(String json) throws Exception {
         List<Usuario> data = mapper.readValue(json, new TypeReference<>() {});

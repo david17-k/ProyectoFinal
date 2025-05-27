@@ -23,7 +23,8 @@ public class ProgramarTransferencias {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-
+    @Version
+    private Integer version;
     @Lob
     private String depositoJson;
     @Lob
@@ -33,11 +34,11 @@ public class ProgramarTransferencias {
 
     private LocalDateTime fecha;
     @Transient
-    private Cola<Deposito>deposito;
+    private Cola<Deposito>deposito=new Cola<>();
     @Transient
     private Cola<Retiro>retiro=new Cola<>();
     @Transient
-    private Cola<Transferir>transferirCola;
+    private Cola<Transferir>transferirCola=new Cola<>();
 
     private double monto;
     private String tipo;
