@@ -58,8 +58,8 @@ public class MonederoController {
 
     @GetMapping("/historial")
     public String verHistorial(HttpSession httpSession,Model model){
-        System.out.println("Historial");
-        List<Transaccion> historial=apiController.obtenerHistorial();
+        Usuario usuario=(Usuario)httpSession.getAttribute("usuario");
+        List<Transaccion>historial=apiController.obtenerHistorial(usuario.getId());
         model.addAttribute("historial",historial);
         return "home/prueba";
     }
@@ -69,10 +69,24 @@ public class MonederoController {
     }
 
     @PostMapping("/envio")
-    public String enviar(@ModelAttribute Monedero monedero,HttpSession httpSession,Model model){
-       httpSession.getAttribute("monedero");
+    public String enviar(@ModelAttribute("Transferir") Transferir transferir,HttpSession httpSession,Model model){
+     Monedero monedero=(Monedero)httpSession.getAttribute("monedero");
+     httpSession.setAttribute("transferir",transferir);
         model.addAttribute("saldo",monedero.getSaldo());
         return "home/Envio";
     }
+    @GetMapping("/retiro")
+    public String retiros(){
+        return "home/Retirar";
+    }
+
+    @PostMapping("/retiro")
+    public String retiros(@ModelAttribute("Retiro") Retiro retiro,HttpSession session,Model model){
+        session.setAttribute("retirar",retiro);
+        Monedero monedero=(Monedero) session.getAttribute("monedero");
+        model.addAttribute("sal",monedero.getSaldo());
+        return "home/Retirar";
+    }
+
 
 }

@@ -48,14 +48,8 @@ public class ApiController {
     }
 
 @GetMapping("/historial")
-    public List<Transaccion>obtenerHistorial(){
-        System.out.println("Historial");
-        Lista<Transaccion>historial=new Lista<>();
-        for(Transaccion h:historialRepositorio.findAll()){
-            System.out.println("Transaccion"+ h.toString());
-            historial.agregarPrimera(h);
-        }
-        return historial.toList();
+    public List<Transaccion>obtenerHistorial(Long idUsuario){
+        return historialRepositorio.findByUsuarioId(idUsuario);
     }
 
     @PostMapping("/guardarTransaccion")

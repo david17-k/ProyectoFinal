@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface HistorialRepositorio extends JpaRepository<Transaccion,Long> {
-    List<Transaccion> findByUsuarioId(Long usuarioId);
+    List<Transaccion>findByUsuarioId(Long usuarioId);
 }

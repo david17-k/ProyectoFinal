@@ -26,6 +26,8 @@ public class DepositoController {
     private final MonederoRepositorio monederoRepositorio;
     @Autowired
     private final HistorialRepositorio historialRepositorio;
+    @Autowired
+    private ApiController apiController;
 
     public DepositoController(MonederoRepositorio monederoRepositorio, HistorialRepositorio historialRepositorio) {
         this.monederoRepositorio = monederoRepositorio;
@@ -63,8 +65,10 @@ public class DepositoController {
         transaccion.setMoneda("$");
         transaccion.setFecha(LocalTime.now());
         transaccion.setUsuario(usuario);
+        monedero.getHistorial().agregarPrimera(transaccion);
         monederoRepositorio.save(monedero);
         historialRepositorio.save(transaccion);
+        apiController.guardarHistorial(transaccion);
         httpSession.setAttribute("monedero", monedero);
         System.out.println(monedero.getSaldo());
         monedero.getDeposito().mostrarContenido();

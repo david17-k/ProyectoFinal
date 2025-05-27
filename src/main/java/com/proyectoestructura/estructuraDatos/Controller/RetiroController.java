@@ -20,7 +20,7 @@ public class RetiroController {
     @Autowired
     private MonederoRepositorio monederoRepositorio;
 
-    @GetMapping("/retiro")
+    @GetMapping("/retirar")
     public String mostrarFormularioRetiro(Model model, HttpSession session) {
         model.addAttribute("retiro", new Retiro());
 
@@ -29,14 +29,14 @@ public class RetiroController {
                 .orElseThrow(() -> new IllegalStateException("Monedero no encontrado"));
         model.addAttribute("saldo", "$" + monedero.getSaldo());
 
-        return "home/Retiro"; // Vista del formulario
+        return "home/Retirar";
     }
 
-    @PostMapping("/retiro")
+    @PostMapping("/retirar")
     public String procesarRetiro(@ModelAttribute("retiro") Retiro retiro, BindingResult result,
                                  HttpSession session, Model model) {
         if (result.hasErrors()) {
-            return "home/Retiro";
+            return "home/Retirar";
         }
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
@@ -46,7 +46,7 @@ public class RetiroController {
         if (monedero.getSaldo() < retiro.getMonto()) {
             model.addAttribute("error", "Saldo insuficiente.");
             model.addAttribute("saldo", "$" + monedero.getSaldo());
-            return "home/Retiro";
+            return "home/Retirar";
         }
 
         monedero.setSaldo(monedero.getSaldo() - retiro.getMonto());
