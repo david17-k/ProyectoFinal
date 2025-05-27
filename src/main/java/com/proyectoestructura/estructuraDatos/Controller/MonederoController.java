@@ -95,7 +95,7 @@ public class MonederoController {
 
     @PostMapping("/retiroPrograma")
     public String programarRetiro(@ModelAttribute ProgramarTransferencias programarTransferencias,HttpSession session,Model model){
-        session.setAttribute("programarRetiro",programarTransferencias);
+        session.setAttribute("programarretiro",programarTransferencias);
         return "home/programarRetiro";
     }
 

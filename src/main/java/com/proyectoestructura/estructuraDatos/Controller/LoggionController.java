@@ -3,8 +3,10 @@ package com.proyectoestructura.estructuraDatos.Controller;
 
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
 import com.proyectoestructura.estructuraDatos.model.Monedero;
+import com.proyectoestructura.estructuraDatos.model.ProgramarTransferencias;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
 import com.proyectoestructura.estructuraDatos.repositorio.MonederoRepositorio;
+import com.proyectoestructura.estructuraDatos.repositorio.ProgramarTransferenciaRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import com.proyectoestructura.estructuraDatos.util.CargarDatos;
 import jakarta.servlet.http.HttpSession;
@@ -23,13 +25,16 @@ public class LoggionController {
     private final CargarDatos cargarDatos;
     private final UsuarioRepositorio usuarioRepositorio;
     private final MonederoRepositorio monederoRepositorio;
+    private final ProgramarTransferenciaRepositorio programarTransferenciaRepositorio;
 
     @Autowired
-    public LoggionController(ModelController modelController, CargarDatos cargarDatos, UsuarioRepositorio usuarioRepositorio, MonederoRepositorio monederoRepositorio) {
+    public LoggionController(ModelController modelController, CargarDatos cargarDatos, UsuarioRepositorio usuarioRepositorio, MonederoRepositorio monederoRepositorio, ProgramarTransferenciaRepositorio programarTransferenciaRepositorio) {
         this.modelController = modelController;
         this.cargarDatos = cargarDatos;
         this.usuarioRepositorio = usuarioRepositorio;
         this.monederoRepositorio = monederoRepositorio;
+        this.programarTransferenciaRepositorio = programarTransferenciaRepositorio;
+
     }
 
 
@@ -57,11 +62,16 @@ public class LoggionController {
                         nuevo.setSaldo(0);
                         return monederoRepositorio.save(nuevo);
                     });
-
+            System.out.println(usuarioLog.getId());
+            ProgramarTransferencias programarTransferencias=programarTransferenciaRepositorio.findByUsuarioId(usuarioLog.getId()).orElseGet(() -> {
+                ProgramarTransferencias nuevo=new ProgramarTransferencias();
+                nuevo.setUsuario(usuarioLog);
+                return programarTransferenciaRepositorio.save(nuevo);
+            });
             httpSession.setAttribute("monedero", monedero);
+            httpSession.setAttribute("programar",programarTransferencias);
             return "redirect:/cuenta";
         }
-
         return "home/login";
 
 

@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Getter
@@ -18,8 +20,8 @@ public class ProgramarTransferencias {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
     @Lob
@@ -29,13 +31,17 @@ public class ProgramarTransferencias {
     @Lob
     private String transferirJson;
 
-    private LocalTime fecha;
+    private LocalDateTime fecha;
     @Transient
     private Cola<Deposito>deposito;
     @Transient
-    private Cola<Retiro>retiro;
+    private Cola<Retiro>retiro=new Cola<>();
     @Transient
     private Cola<Transferir>transferirCola;
+
+    private double monto;
+    private String tipo;
+
 
 
     public void serializarTransacciones() throws Exception {
@@ -47,8 +53,6 @@ public class ProgramarTransferencias {
     public void deserializarTransaccion() throws Exception {
         if(depositoJson!=null)this.deposito=Serializador.deserializarColaDeposito(depositoJson);
         if(retiroJson!=null)this.retiro=Serializador.deserializarColaRetiro(retiroJson);
-
-
     }
 
 
