@@ -71,7 +71,6 @@ public class MonederoController {
     @PostMapping("/envio")
     public String enviar(@ModelAttribute Monedero monedero,HttpSession httpSession,Model model){
        httpSession.getAttribute("monedero");
-
         model.addAttribute("saldo",monedero.getSaldo());
         return "home/Envio";
     }
