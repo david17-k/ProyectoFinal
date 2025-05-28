@@ -51,6 +51,8 @@ public class Monedero {
 
 
 
+
+
     @Transient
     private Cola<Usuario> inicioSeccion = new Cola<>();
 
