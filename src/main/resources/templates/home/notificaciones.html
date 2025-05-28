@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Notificaciones</title>
+</head>
+<body>
+<h2>Notificaciones</h2>
+<ul>
+    <li th:each="n : ${notificaciones}" th:text="${n.fecha} + ' - ' + ${n.mensaje}"></li>
+</ul>
+<a href="/cuenta">← Volver</a>
+</body>
+</html>

@@ -3,6 +3,7 @@ package com.proyectoestructura.estructuraDatos.model;
 import com.proyectoestructura.estructuraDatos.estructura.Arbol;
 import com.proyectoestructura.estructuraDatos.estructura.Cola;
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
+import com.proyectoestructura.estructuraDatos.estructura.ListaCircularSimple;
 import com.proyectoestructura.estructuraDatos.util.Serializador;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -72,6 +73,9 @@ public class Monedero {
     private Arbol punto=new Arbol();
 
 
+@Transient
+private ListaCircularSimple listaCircularSimple=new ListaCircularSimple(10);
+
 
 
     public void setPuntos(int puntos) {
@@ -94,5 +98,6 @@ public class Monedero {
         if(retirarJson!=null)this.retiros=Serializador.deserealizarListaRetiro(retirarJson);
         if(historialJson!=null)this.historial=Serializador.deserealizarListaHistorial(historialJson);
     }
+
 }
 

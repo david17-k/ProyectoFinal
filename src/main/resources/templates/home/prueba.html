@@ -23,7 +23,7 @@
     <tr th:each="transaccion : ${historial}">
         <td th:text="${transaccion.tipo}">Depósito</td>
         <td th:text="${#temporals.format(transaccion.fecha, 'dd/MM/yyyy HH:mm')}">01/01/2025 12:00</td>
-        <td th:text="${#numbers.formatDecimal(transaccion.monto)}">100.00</td>
+        <td th:text="${(transaccion.monto)}">100.00</td>
         <td th:text="${transaccion.descripcion}">Descripción</td>
         <td>
             <div class="usuario-info" th:if="${transaccion.usuario != null}">

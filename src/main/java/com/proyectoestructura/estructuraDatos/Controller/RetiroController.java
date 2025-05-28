@@ -5,6 +5,7 @@ import com.proyectoestructura.estructuraDatos.model.Monedero;
 import com.proyectoestructura.estructuraDatos.model.Retiro;
 import com.proyectoestructura.estructuraDatos.model.Transaccion;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
+import com.proyectoestructura.estructuraDatos.model.service.NotificarService;
 import com.proyectoestructura.estructuraDatos.repositorio.HistorialRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.MonederoRepositorio;
 import jakarta.servlet.http.HttpSession;
@@ -29,6 +30,8 @@ public class RetiroController {
     private HistorialRepositorio historialRepositorio;
     @Autowired
     private ApiController apiController;
+    @Autowired
+    private NotificarService notificarService;
 
     @GetMapping("/retirar")
     public String mostrarFormularioRetiro(Model model, HttpSession session) {
@@ -73,6 +76,9 @@ public class RetiroController {
         transaccion.setDescripcion("Retiro de cuenta");
         historialRepositorio.save(transaccion);
         apiController.guardarHistorial(transaccion);
+        if(monedero.getSaldo()<10) {
+            notificarService.enviarNotificacion(monedero, "Saldo bajo");
+        }
         return "redirect:/cuenta";
     }
 }

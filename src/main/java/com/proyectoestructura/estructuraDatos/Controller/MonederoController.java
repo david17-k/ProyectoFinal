@@ -2,6 +2,7 @@ package com.proyectoestructura.estructuraDatos.Controller;
 
 
 import com.proyectoestructura.estructuraDatos.model.*;
+import com.proyectoestructura.estructuraDatos.model.service.NotificarService;
 import com.proyectoestructura.estructuraDatos.repositorio.MonederoRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.UsuarioRepositorio;
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +24,8 @@ public class MonederoController {
     ApiController apiController;
     @Autowired
     MonederoRepositorio monederoRepositorio;
+    @Autowired
+    NotificarService notificarService;
 
     @GetMapping("/cuenta")
     public String bienvenida(Model model, HttpSession httpSession){
@@ -54,6 +57,8 @@ public class MonederoController {
     public  String rango(){
         return "redirect:/rango";
     }
+
+
 
     @GetMapping("/informacion")
     public String informacion(HttpSession session,Model model){

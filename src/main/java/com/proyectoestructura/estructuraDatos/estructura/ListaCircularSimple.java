@@ -1,69 +1,73 @@
 package com.proyectoestructura.estructuraDatos.estructura;
 
-public class ListaCircularSimple <T>{
+import com.proyectoestructura.estructuraDatos.model.Notificacion;
 
-    private Nodo<T>primerNodo;
-    private Nodo<T>ultimoNodo;
-    private int tamaño;
+import java.util.ArrayList;
+import java.util.List;
 
+public class ListaCircularSimple {
 
-    public ListaCircularSimple() {
-        primerNodo=null;
-        ultimoNodo=null;
-        this.tamaño = 0;
-    }
+        private NodoNotificacion primerNodo;
+        private NodoNotificacion ultimoNodo;
+        private int tamaño;
+        private final int capacidad;
 
-    public void agregarInicio(T valorNodo) {
-        Nodo<T> nuevoNodo = new Nodo<>(valorNodo);
-
-        if(estaVacia())
-        {
-            ultimoNodo = nuevoNodo;
-            nuevoNodo.setSiguienteNodo(ultimoNodo);
-        }
-        else
-        {
-            nuevoNodo.setSiguienteNodo(ultimoNodo.getSiguienteNodo());
-            ultimoNodo.setSiguienteNodo(nuevoNodo);
-        }
-        tamaño++;
-    }
-
-    private boolean estaVacia() {
-        return primerNodo==null && ultimoNodo==null;
-    }
-
-    public boolean buscar(T dato) {
-        if (ultimoNodo == null) {  // Si la lista está vacía
-            return false;
+        public ListaCircularSimple(int capacidad) {
+            this.primerNodo = null;
+            this.ultimoNodo = null;
+            this.tamaño = 0;
+            this.capacidad = capacidad;
         }
 
-        Nodo<T> actual = ultimoNodo.getSiguienteNodo();  //
-        do {
-            if (actual.getDato() == dato) {
-                return true;
+        public void agregarInicio(Notificacion notificacion) {
+            NodoNotificacion nuevoNodo = new NodoNotificacion(notificacion);
+
+            if (estaVacia()) {
+                primerNodo = nuevoNodo;
+                ultimoNodo = nuevoNodo;
+                nuevoNodo.setSiguienteNodo(nuevoNodo);
+            } else {
+                nuevoNodo.setSiguienteNodo(primerNodo);
+                ultimoNodo.setSiguienteNodo(nuevoNodo);
+                primerNodo = nuevoNodo;
             }
-            actual = actual.getSiguienteNodo();
-        } while (actual != ultimoNodo.getSiguienteNodo());
 
-        return false;
-    }
-
-    public void imprimir() {
-        if (estaVacia()) {
-            System.out.println("La lista está vacía.");
-            return;
+            if (tamaño == capacidad) {
+                eliminarUltimo();
+            } else {
+                tamaño++;
+            }
         }
 
-        Nodo<T> actual = ultimoNodo.getSiguienteNodo();
-        do {
-            System.out.print(actual.getDato() + " ");
-            actual = actual.getSiguienteNodo();  //
-        } while (actual != ultimoNodo.getSiguienteNodo());
+        private void eliminarUltimo() {
+            if (estaVacia()) return;
 
-        System.out.println();
+            NodoNotificacion actual = primerNodo;
+            while (actual.getSiguienteNodo() != ultimoNodo) {
+                actual = actual.getSiguienteNodo();
+            }
+
+            actual.setSiguienteNodo(primerNodo);
+            ultimoNodo = actual;
+        }
+
+        private boolean estaVacia() {
+            return primerNodo == null;
+        }
+
+        public List<Notificacion> obtenerNotificaciones() {
+            List<Notificacion> lista = new ArrayList<>();
+            if (estaVacia()) return lista;
+
+            NodoNotificacion actual = primerNodo;
+            do {
+                lista.add(actual.getNotificacion());
+                actual = actual.getSiguienteNodo();
+            } while (actual != primerNodo);
+
+            return lista;
+        }
     }
 
 
-}
 

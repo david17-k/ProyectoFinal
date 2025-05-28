@@ -2,9 +2,10 @@ package com.proyectoestructura.estructuraDatos.model;
 
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
 import jakarta.persistence.*;
+import lombok.ToString;
 import org.springframework.stereotype.Controller;
 
-
+@ToString
 @Entity
 public class Usuario {
 
@@ -17,6 +18,7 @@ public class Usuario {
     private String apellido;
     private String cedula;
     private String idCuenta;
+    private String celular;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Monedero monedero;
@@ -91,14 +93,12 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "apellido='" + apellido + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", cedula='" + cedula + '\'' +
-                ", idCuenta='" + idCuenta + '\'' +
-                '}';
+    public String getCelular() {
+        return celular;
     }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
 }
