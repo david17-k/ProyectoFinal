@@ -42,6 +42,8 @@ public class Monedero {
 
     private double saldo=0;
 
+    private int puntos=0;
+
 
     @Transient
     private Cola<Usuario> inicioSeccion = new Cola<>();

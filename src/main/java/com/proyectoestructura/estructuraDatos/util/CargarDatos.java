@@ -34,10 +34,12 @@ public class CargarDatos implements CommandLineRunner {
             Monedero monedero1 = new Monedero();
             monedero1.setUsuario(usuario1);
             monedero1.setSaldo(50000);
+            monedero1.setPuntos(500);
             monederoRepositorio.save(monedero1);
 
             Monedero monedero2 = new Monedero();
             monedero2.setSaldo(20000);
+            monedero2.setPuntos(1000);
             monedero2.setUsuario(usuario2);
             monederoRepositorio.save(monedero2);
         }
