@@ -88,15 +88,25 @@ public class ProgramarController {
         Transferir transferir=new Transferir();
         Cola<Transferir>cola=new Cola<>();
         Monedero monedero=(Monedero) httpSession.getAttribute("monedero");
-        transferir.setMonto(transferir.getMonto());
+
+        transferir.setMonto(programarTransferencias.getMonto());
+
         transferir.setIdUsuario(idUsuario);
+        transferir.setDescripcion("ayuda");
+
         model.addAttribute("saldo",monedero.getSaldo());
-        transferir.setDescripcion(transferir.getDescripcion());
+
         cola.push(transferir);
+
         programarTransferencias.setTransferirCola(cola);
+
         programarTransferencias.setUsuario(monedero.getUsuario());
+
         programarTransferencias.serializarTransacciones();
+
         programarTransferenciaRepositorio.save(programarTransferencias);
+
+        transaccionService.realizarTranferencia();
         return "home/programarTransferencia";
     }
 

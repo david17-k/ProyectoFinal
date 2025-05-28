@@ -54,6 +54,7 @@ public class ProgramarTransferencias {
     public void deserializarTransaccion() throws Exception {
         if(depositoJson!=null)this.deposito=Serializador.deserializarColaDeposito(depositoJson);
         if(retiroJson!=null)this.retiro=Serializador.deserializarColaRetiro(retiroJson);
+        if(transferirJson!=null)this.transferirCola=Serializador.deserializarColaTransferir(transferirJson);
     }
 
 

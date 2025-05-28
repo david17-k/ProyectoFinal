@@ -2,10 +2,7 @@ package com.proyectoestructura.estructuraDatos.model.service;
 
 
 import com.proyectoestructura.estructuraDatos.estructura.Cola;
-import com.proyectoestructura.estructuraDatos.model.Deposito;
-import com.proyectoestructura.estructuraDatos.model.Monedero;
-import com.proyectoestructura.estructuraDatos.model.ProgramarTransferencias;
-import com.proyectoestructura.estructuraDatos.model.Retiro;
+import com.proyectoestructura.estructuraDatos.model.*;
 import com.proyectoestructura.estructuraDatos.repositorio.MonederoRepositorio;
 import com.proyectoestructura.estructuraDatos.repositorio.ProgramarTransferenciaRepositorio;
 import jakarta.persistence.Version;
@@ -37,6 +34,9 @@ public class TransaccionService {
 
     @Autowired
     RetiroService retiroService;
+
+    @Autowired
+    TransferenciaService transferenciaService;
 
 
     @Scheduled(cron = "0 * * * * MON-SUN")
@@ -101,6 +101,40 @@ public class TransaccionService {
 
     }
 
+    @Scheduled(cron = "0 * * * * MON-SUN")
+    @Transactional
+    public void realizarTranferencia(){
+        List<ProgramarTransferencias>lista=programarTransferenciaRepositorio.findAll();
+        for(ProgramarTransferencias d:lista){
+            try {
+                if(d.getFecha().isBefore(java.time.LocalDateTime.now())){
+                    d.deserializarTransaccion();
+                    Cola<Transferir>transferirCola=d.getTransferirCola();
+                    Monedero monedero=d.getUsuario().getMonedero();
+                    if(d.getTransferirCola()!=null && !d.getTransferirCola().verificar()){
+                        System.out.println("Realizando tranferencia");
+                        Transferir transferir=transferirCola.poll();
+                        d.serializarTransacciones();
+                       transferenciaService.realizarTransferencia(transferir, monedero.getId());
+                        ProgramarTransferencias actualizado = programarTransferenciaRepositorio.findById(d.getId())
+                                .orElseThrow(() -> new IllegalStateException("No existe programación"));
+                        actualizado.setTransferirCola(d.getTransferirCola());
+                        actualizado.serializarTransacciones();
+                        programarTransferenciaRepositorio.save(actualizado);
+                        System.out.println("Transferencia realizada");
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+    }
 
 
 }
+
+
+
+
