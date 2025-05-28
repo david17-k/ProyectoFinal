@@ -80,8 +80,6 @@ public class TransaccionService {
                     d.deserializarTransaccion();
                     Cola<Deposito>depositoCola=d.getDeposito();
                     Monedero monedero=d.getUsuario().getMonedero();
-
-
                     if(d.getDeposito()!=null && !d.getDeposito().verificar()){
                         System.out.println("Realizando Deposito");
                         Deposito deposito=depositoCola.poll();

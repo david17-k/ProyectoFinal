@@ -177,11 +177,13 @@
             </div>
             <div class="productcontent">
                     <img src="/static/ImagenesWeb/programarTraspasos.jpg" th:src="@{ImagenesWeb/programarTraspasos.jpg}" alt="" class="productimg" />
+                <form th:action="@{transferirPrograma}" method="post">
                     <h3 class="producttitle">Programar Transferencias</h3>
                     <span class="productsubtitle"></span>
-                    <button class="button productbutton" >Transfiere
+                    <button class="button productbutton" th:href="@{transferirPrograma}" >Transfiere
                         <i class="bx bx-cart-alt buttonicon"></i>
                     </button>
+                </form>
             </div>
         </div>
     </section>

@@ -3,19 +3,18 @@ package com.proyectoestructura.estructuraDatos.Controller;
 
 import com.proyectoestructura.estructuraDatos.estructura.Cola;
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
-import com.proyectoestructura.estructuraDatos.model.Deposito;
-import com.proyectoestructura.estructuraDatos.model.Monedero;
-import com.proyectoestructura.estructuraDatos.model.ProgramarTransferencias;
-import com.proyectoestructura.estructuraDatos.model.Retiro;
+import com.proyectoestructura.estructuraDatos.model.*;
 import com.proyectoestructura.estructuraDatos.model.service.TransaccionService;
 import com.proyectoestructura.estructuraDatos.repositorio.ProgramarTransferenciaRepositorio;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ProgramarController {
@@ -77,6 +76,28 @@ public class ProgramarController {
 
         transaccionService.programarDeposito();
         return "home/programarDeposito";
+    }
+
+    @GetMapping("/programaEnvio")
+    public String programarE(){
+        return "home/programarTransferencia";
+    }
+
+    @PostMapping("/programarEnvio")
+    public String programarE(@ModelAttribute("programaEnvio")ProgramarTransferencias programarTransferencias, HttpSession httpSession, @RequestParam("idUsuario")String idUsuario,Model model) throws Exception {
+        Transferir transferir=new Transferir();
+        Cola<Transferir>cola=new Cola<>();
+        Monedero monedero=(Monedero) httpSession.getAttribute("monedero");
+        transferir.setMonto(transferir.getMonto());
+        transferir.setIdUsuario(idUsuario);
+        model.addAttribute("saldo",monedero.getSaldo());
+        transferir.setDescripcion(transferir.getDescripcion());
+        cola.push(transferir);
+        programarTransferencias.setTransferirCola(cola);
+        programarTransferencias.setUsuario(monedero.getUsuario());
+        programarTransferencias.serializarTransacciones();
+        programarTransferenciaRepositorio.save(programarTransferencias);
+        return "home/programarTransferencia";
     }
 
 }
