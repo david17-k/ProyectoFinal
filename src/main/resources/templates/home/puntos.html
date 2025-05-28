@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Puntos Acumulados - Monedero Virtual</title>
+  <link rel="stylesheet" href="/static/css/puntos.css" th:href="@{/css/puntos.css}" />
+</head>
+<body>
+
+<div class="points-card">
+  <h2>Puntos Acumulados</h2>
+  <div class="points" th:text="${puntos}">0</div>
+  <p>Sigue haciendo depósitos y transferencias para ganar más puntos.</p>
+
+  <button onclick="window.history.back()">Volver al inicio</button>
+</div>
+
+<script>
+  function canjearPuntos() {
+      alert("Funcionalidad de canje aún no disponible.");
+  }
+</script>
+
+</body>
+</html>

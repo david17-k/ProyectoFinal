@@ -39,7 +39,7 @@ public class CargarDatos implements CommandLineRunner {
 
             Monedero monedero2 = new Monedero();
             monedero2.setSaldo(20000);
-            monedero2.setPuntos(1000);
+            monedero2.setPuntos(4999);
             monedero2.setUsuario(usuario2);
             monederoRepositorio.save(monedero2);
         }

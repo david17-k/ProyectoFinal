@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Rango del Usuario - Monedero Virtual</title>
+    <link rel="stylesheet" href="/static/css/rango.css" th:href="@{/css/rango.css}" />
+</head>
+<body>
+<div class="rango-card">
+    <h2>Bienvenido, <span th:text="${usuario.nombre}">Usuario</span></h2>
+    <p>Tu rango actual es:</p>
+    <div class="rango" th:text="${monedero.rangos}">PLATA</div>
+    <p class="puntos">Puntos acumulados: <span th:text="${monedero.puntos}">2000</span></p>
+    <button onclick="window.location.href='/cuenta'">Volver al inicio</button>
+</div>
+</body>
+</html>

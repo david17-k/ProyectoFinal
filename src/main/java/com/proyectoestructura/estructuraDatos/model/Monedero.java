@@ -1,5 +1,6 @@
 package com.proyectoestructura.estructuraDatos.model;
 
+import com.proyectoestructura.estructuraDatos.estructura.Arbol;
 import com.proyectoestructura.estructuraDatos.estructura.Cola;
 import com.proyectoestructura.estructuraDatos.estructura.Lista;
 import com.proyectoestructura.estructuraDatos.util.Serializador;
@@ -42,7 +43,12 @@ public class Monedero {
 
     private double saldo=0;
 
+    @Column
     private int puntos=0;
+
+    private Rangos rangos;
+
+
 
 
     @Transient
@@ -60,7 +66,16 @@ public class Monedero {
     @Transient
     private Lista<Transaccion>historial=new Lista<>();
 
+    @Transient
+    private Arbol punto=new Arbol();
 
+
+
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+        this.rangos = Rangos.obtenerRango(puntos);
+    }
 
 
 

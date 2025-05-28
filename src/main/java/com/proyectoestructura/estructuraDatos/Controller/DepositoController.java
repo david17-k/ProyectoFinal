@@ -38,22 +38,20 @@ public class DepositoController {
    public String depositar(Model model){
        return "home/Deposito";
    }
-
     @PostMapping("/deposito")
     public String depositar(@ModelAttribute("Deposito") Deposito deposito, BindingResult bindingResult, HttpSession httpSession) {
         if (bindingResult.hasErrors()) {
             return "home/Deposito";
         }
-
         Usuario usuario = (Usuario) httpSession.getAttribute("usuario");
         if (usuario == null) {
             return "redirect:/login";
         }
         Monedero monedero = monederoRepositorio.findByUsuarioId(usuario.getId())
                 .orElseThrow(() -> new IllegalStateException("Monedero no encontrado para el usuario"));
-
         monedero.getDeposito().agregarPrimera(deposito);
-        monedero.setSaldo(monedero.getSaldo() + deposito.getDeposito());
+        monedero.setSaldo(monedero.getSaldo() + deposito.getDeposito());;
+        monedero.setPuntos(((int) deposito.getDeposito()/100)+ monedero.getPuntos());
         try {
             monedero.serializarTodo();
         } catch (Exception e) {
@@ -70,8 +68,6 @@ public class DepositoController {
         historialRepositorio.save(transaccion);
         apiController.guardarHistorial(transaccion);
         httpSession.setAttribute("monedero", monedero);
-        System.out.println(monedero.getSaldo());
-        monedero.getDeposito().mostrarContenido();
         return "redirect:/cuenta";
     }
 

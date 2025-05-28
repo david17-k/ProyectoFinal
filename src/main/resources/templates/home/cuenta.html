@@ -56,8 +56,8 @@
                               ¿Que quieres hacer?
                             </p>
                             <div class="homebut">
-                                <a href="#"  class="button">Ver Informacion</a>
-                                <a href="#" class="button ">Rango</a>
+                                <a th:href="@{informacion}" class="button">Ver Informacion</a>
+                                <a th:href="@{rango}" class="button ">Rango</a>
                             </div>
                             <div class="saldodata">
                                 <h1 class="hometitle" >Saldo</h1>
@@ -134,12 +134,14 @@
                 </form>
             </div>
             <div class="productcontent">
+                <form th:action="@{puntos}" method="post">
                 <img src="/static/ImagenesWeb/puntos.png"  th:src="@{ImagenesWeb/puntos.png}" alt="" class="productimg" />
                 <h3 class="producttitle">Consultar puntos</h3>
                 <span class="productsubtitle"></span>
-                <button class="button productbutton">VER
+                <button class="button productbutton" th:href="@{puntos}">VER
                     <i class="bx bx-cart-alt buttonicon"></i>
                 </button>
+                </form>
             </div>
             <div class="productcontent">
                 <img src="/static/ImagenesWeb/redimir.jpg" th:src="@{ImagenesWeb/redimir.jpg}" alt="" class="productimg" />

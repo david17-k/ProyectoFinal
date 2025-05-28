@@ -62,6 +62,8 @@ public class EnvioController {
                     usuarioRepositorio.save(c);
                     actulizarSaldo= monedero.getSaldo()-transferir.getMonto();
                     monedero.setSaldo(actulizarSaldo);
+                    int puntosGanados=((int)transferir.getMonto()/100)*3;
+                    monedero.setPuntos(monedero.getPuntos()+puntosGanados);
                     monederoRepositorio.save(monedero);
                     transaccion.setTipo("Transferencia");
                     transaccion.setMonto(transferir.getMonto());

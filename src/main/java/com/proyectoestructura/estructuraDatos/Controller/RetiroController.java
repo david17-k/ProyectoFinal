@@ -60,6 +60,8 @@ public class RetiroController {
         }
 
         monedero.setSaldo(monedero.getSaldo() - retiro.getMonto());
+        int puntosGanados=((int)retiro.getMonto()/100)*2;
+        monedero.setPuntos( monedero.getPuntos()+puntosGanados);
         monederoRepositorio.save(monedero);
         session.setAttribute("monedero", monedero);
         Transaccion transaccion=new Transaccion();

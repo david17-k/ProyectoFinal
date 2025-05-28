@@ -41,6 +41,47 @@ public class MonederoController {
         return "home/cuenta";
 
     }
+
+    @GetMapping("/rango")
+    public String rango(HttpSession session,Model model){
+        Usuario usuario=(Usuario) session.getAttribute("usuario");
+        Monedero monedero=(Monedero)session.getAttribute("monedero");
+        model.addAttribute("usuario",usuario);
+        model.addAttribute("monedero",monedero);
+        return "home/rango";
+    }
+    @PostMapping("/rango")
+    public  String rango(){
+        return "redirect:/rango";
+    }
+
+    @GetMapping("/informacion")
+    public String informacion(HttpSession session,Model model){
+        Usuario usuario=(Usuario) session.getAttribute("usuario");
+        Monedero monedero=(Monedero)session.getAttribute("monedero");
+        model.addAttribute("usuario",usuario);
+        model.addAttribute("monedero",monedero);
+        return "home/informacion";
+    }
+
+    @GetMapping("/puntos")
+    public String punto(HttpSession httpSession,Model model){
+        Monedero monedero=(Monedero) httpSession.getAttribute("monedero");
+        System.out.println(monedero.getPuntos());
+        model.addAttribute("puntos",monedero.getPuntos());
+        return "home/puntos";
+    }
+
+
+    @PostMapping("/puntos")
+    public String punto(){
+        return "redirect:/puntos";
+    }
+
+
+
+
+
     @GetMapping("/depositar")
     public String depositar(Model model,HttpSession httpSession){
         Deposito deposito1=(Deposito)httpSession.getAttribute("deposito");
