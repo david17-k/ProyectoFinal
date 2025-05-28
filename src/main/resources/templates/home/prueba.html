@@ -3,34 +3,39 @@
 <head>
     <title>Historial de Transacciones</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet"  href="/static/css/historial.css"  th:href="@{/css/historial.css}" />
 </head>
 <body>
+
 <h1>Historial de Transacciones</h1>
 
-<table border="1">
+<table>
     <thead>
     <tr>
-        <th>ID</th>
+        <th>Tipo</th>
         <th>Fecha</th>
         <th>Monto Total</th>
-        <th>Detalle de Depósitos</th>
-        <th>Informacio cliente</th>
+        <th>Descripción</th>
+        <th>Usuario</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="transaccion : ${historial}">
-        <td th:text="${transaccion.tipo}">1</td>
-        <td th:text="${transaccion.fecha}">2025-01-01</td>
-        <td th:text="${transaccion.monto}">3</td>
-        <td th:text="${transaccion.descripcion}" ></td>
-        <td th:text="${transaccion.usuario}">
+        <td th:text="${transaccion.tipo}">Depósito</td>
+        <td th:text="${#temporals.format(transaccion.fecha, 'dd/MM/yyyy HH:mm')}">01/01/2025 12:00</td>
+        <td th:text="${#numbers.formatDecimal(transaccion.monto)}">100.00</td>
+        <td th:text="${transaccion.descripcion}">Descripción</td>
+        <td>
+            <div class="usuario-info" th:if="${transaccion.usuario != null}">
+                <strong th:text="${transaccion.usuario.nombre}">Nombre</strong><br/>
+            </div>
+            <span th:if="${transaccion.usuario == null}">Sin usuario</span>
         </td>
     </tr>
     </tbody>
 </table>
 
-<br/>
-<a href="/cuenta">Volver a la cuenta</a>
+<a href="/cuenta" class="btn-back">Volver a la cuenta</a>
+
 </body>
 </html>
