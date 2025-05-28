@@ -12,6 +12,7 @@ import com.proyectoestructura.estructuraDatos.repositorio.ProgramarTransferencia
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +31,16 @@ public class ProgramarController {
     }
 
     @PostMapping("/programaRetiro")
-    public String programarRetiro(@ModelAttribute("programarRetiros")ProgramarTransferencias programarTransferencias, HttpSession session) throws Exception {
+    public String programarRetiro(@ModelAttribute("programarRetiros")ProgramarTransferencias programarTransferencias, HttpSession session, Model model) throws Exception {
         Retiro retiro=new Retiro();
         Cola<Retiro> retiroLista=new Cola<>();
+
         Monedero monedero=(Monedero)session.getAttribute("monedero");
+        if(programarTransferencias.getMonto()> monedero.getSaldo()){
+            model.addAttribute("error", "Saldo insuficiente.");
+            model.addAttribute("saldo", "$" + monedero.getSaldo());
+            return "home/Deposito";
+        }
         retiro.setMonto(programarTransferencias.getMonto());
         retiroLista.push(retiro);
         programarTransferencias.setRetiro(retiroLista);
@@ -42,6 +49,34 @@ public class ProgramarController {
         programarTransferenciaRepositorio.save(programarTransferencias);
         transaccionService.programarRetiro();
         return "home/programarRetiro";
+    }
+
+    @GetMapping("/programaDeposito")
+    public String programarDeposito(){
+        return "home/programarDeposito";
+    }
+
+    @PostMapping("/programaDeposito")
+    public String programarDeposito(@ModelAttribute("programarDepo")ProgramarTransferencias programarTransferencias,HttpSession session) throws Exception {
+        Deposito deposito=new Deposito();
+        Cola<Deposito>depositoCola=new Cola<>();
+        Monedero monedero=(Monedero)session.getAttribute("monedero");
+        System.out.println(programarTransferencias.getMonto());
+
+        deposito.setDeposito(programarTransferencias.getMonto());
+
+        depositoCola.push(deposito);
+
+        programarTransferencias.setDeposito(depositoCola);
+
+        programarTransferencias.setUsuario(monedero.getUsuario());
+
+        programarTransferencias.serializarTransacciones();
+
+        programarTransferenciaRepositorio.save(programarTransferencias);
+
+        transaccionService.programarDeposito();
+        return "home/programarDeposito";
     }
 
 }

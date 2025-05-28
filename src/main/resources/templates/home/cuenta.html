@@ -157,9 +157,10 @@
         <div class="productcontainer container grid">
             <div class="productcontent">
                     <img src="/static/ImagenesWeb/programar.jpg" th:src="@{ImagenesWeb/programar.jpg}" alt="" class="productimg" />
+                <form th:action="@{depositoPrograma}" method="post">
                     <h3 class="producttitle">Programar Deposito</h3>
                     <span class="productsubtitle"></span>
-                    <button class="button productbutton">Deposita
+                    <button type="submit" class="button productbutton" th:href="@{depositoPrograma}">Deposita
                         <i class="bx bx-cart-alt buttonicon"></i>
                     </button>
                 </form>

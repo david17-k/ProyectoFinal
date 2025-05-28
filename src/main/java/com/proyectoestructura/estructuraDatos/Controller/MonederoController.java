@@ -96,7 +96,19 @@ public class MonederoController {
     @PostMapping("/retiroPrograma")
     public String programarRetiro(@ModelAttribute ProgramarTransferencias programarTransferencias,HttpSession session,Model model){
         session.setAttribute("programarretiro",programarTransferencias);
+        Monedero monedero=(Monedero)session.getAttribute("monedero");
+        model.addAttribute("saldo","$"+monedero.getSaldo());
         return "home/programarRetiro";
+    }
+
+    @GetMapping("/depositoPrograma")
+    public String programaDeposito(){
+        return "home/programarDeposito";
+    }
+    @PostMapping("/depositoPrograma")
+    public String progrmaDeposito(@ModelAttribute ProgramarTransferencias programarTransferencias,HttpSession session){
+        session.setAttribute("programadeposito",programarTransferencias);
+        return "home/programarDeposito";
     }
 
 

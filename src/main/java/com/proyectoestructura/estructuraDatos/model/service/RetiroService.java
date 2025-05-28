@@ -23,6 +23,9 @@ public class RetiroService {
        List<Monedero>monedero=monederoRepositorio.findAll();
        for (Monedero m:monedero) {
            if (id.equals(m.getId())) {
+               if(m.getSaldo() < retiro.getMonto()){
+                   monederoRepositorio.save(m);
+               }
                    double descontar= m.getSaldo()- retiro.getMonto();
                    m.setSaldo(descontar);
                    monederoRepositorio.save(m);

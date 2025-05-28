@@ -15,8 +15,9 @@
 <div class="deposit-card">
   <h2>Formulario de Retiro</h2>
   <form th:action="@{/programaRetiro}" method="post">
-    <div class="form-group">
-      <label for="monto">Monto a Reatirar:</label>
+    <div th:if="${error}" class="error-message" th:text="${error}"></div>
+    <div class="form-group" >
+      <label  for="monto" th:text="${saldo}" >Monto a Reatirar: </label>
       <input type="number" step="0.01" id="monto" name="monto" placeholder="Ingrese el monto" required />
     </div>
 

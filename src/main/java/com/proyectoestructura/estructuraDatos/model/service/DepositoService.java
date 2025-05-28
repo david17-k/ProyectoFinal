@@ -3,6 +3,7 @@ package com.proyectoestructura.estructuraDatos.model.service;
 
 import com.proyectoestructura.estructuraDatos.model.Deposito;
 import com.proyectoestructura.estructuraDatos.model.Monedero;
+import com.proyectoestructura.estructuraDatos.model.ProgramarTransferencias;
 import com.proyectoestructura.estructuraDatos.model.Usuario;
 import com.proyectoestructura.estructuraDatos.repositorio.MonederoRepositorio;
 import jakarta.transaction.Transactional;
@@ -29,5 +30,18 @@ public class DepositoService {
     public List<Monedero> findAll(){
         return monederoRepositorio.findAll();
     }
+
+    public void realizarDeposito(Deposito deposito,Long id){
+        List<Monedero>monedero=monederoRepositorio.findAll();
+        for (Monedero m:monedero) {
+            if (id.equals(m.getId())) {
+                double aunmento= m.getSaldo()+ deposito.getDeposito();
+                m.setSaldo(aunmento);
+                monederoRepositorio.save(m);
+            }
+        }
+    }
+
+
 
 }

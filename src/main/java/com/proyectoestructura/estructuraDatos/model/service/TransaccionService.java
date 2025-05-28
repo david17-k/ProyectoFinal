@@ -69,9 +69,40 @@ public class TransaccionService {
        }
     }
 
+
     @Scheduled(cron = "0 * * * * MON-SUN")
-    public void deposito(){
+    @Transactional
+    public void programarDeposito(){
+        List<ProgramarTransferencias>lista=programarTransferenciaRepositorio.findAll();
+        for(ProgramarTransferencias d:lista){
+            try {
+                if(d.getFecha().isBefore(java.time.LocalDateTime.now())){
+                    d.deserializarTransaccion();
+                    Cola<Deposito>depositoCola=d.getDeposito();
+                    Monedero monedero=d.getUsuario().getMonedero();
+
+
+                    if(d.getDeposito()!=null && !d.getDeposito().verificar()){
+                        System.out.println("Realizando Deposito");
+                        Deposito deposito=depositoCola.poll();
+                        d.serializarTransacciones();
+                        depositoService.realizarDeposito(deposito, monedero.getId());
+                        ProgramarTransferencias actualizado = programarTransferenciaRepositorio.findById(d.getId())
+                                .orElseThrow(() -> new IllegalStateException("No existe programación"));
+                        actualizado.setDeposito(d.getDeposito());
+                        actualizado.serializarTransacciones();
+                        programarTransferenciaRepositorio.save(actualizado);
+                        System.out.println("Deposito realizado");
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
 
     }
+
+
 
 }
